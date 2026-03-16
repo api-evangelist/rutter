@@ -1,0 +1,48 @@
+aid: rutter
+name: Rutter
+description: >-
+  Rutter is a unified RESTful API for B2B financial products that connects to
+  commerce, payments, accounting, and ads platforms through a single API.
+  Rutter enables developers to read, update, write, and remove data across
+  60+ platforms including accounting, commerce, payments, and advertising
+  systems used globally by business customers.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Unified API
+  - Commerce
+  - Accounting
+  - Payments
+  - B2B
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/apis.yml
+created: '2026-03-16'
+modified: '2026-03-16'
+specificationVersion: '0.19'
+apis:
+  - aid: rutter:rutter-api
+    name: Rutter API
+    description: >-
+      The Rutter unified API allows developers to connect to over 60 commerce,
+      payments, accounting, and ads platforms through a single REST API,
+      enabling reading and writing of business financial data across major
+      platforms with a unified data model.
+    humanURL: https://docs.rutter.com/
+    tags:
+      - Unified API
+      - Commerce
+      - Accounting
+      - Payments
+    properties:
+      - type: Documentation
+        url: https://docs.rutter.com/
+      - type: Reference
+        url: https://docs.rutter.com/rest/2023-02-07/basics
+common:
+  - type: Website
+    url: https://www.rutter.com/
+  - type: Documentation
+    url: https://docs.rutter.com/
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
