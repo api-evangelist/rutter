@@ -1,11 +1,12 @@
 aid: rutter
 name: Rutter
 description: >-
-  Rutter is a unified RESTful API for B2B financial products that connects to
-  commerce, payments, accounting, and ads platforms through a single API.
-  Rutter enables developers to read, update, write, and remove data across
-  60+ platforms including accounting, commerce, payments, and advertising
-  systems used globally by business customers.
+  Rutter is the leading unified RESTful API for B2B financial products that
+  connects to over 60 commerce, payments, accounting, and ads platforms
+  through a single API. Trusted by companies like Airwallex, Mercury, and
+  Ramp, Rutter enables developers to read, update, write, and remove data
+  across major business platforms with a unified data model and idempotency
+  guarantees for financial data.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
@@ -14,35 +15,73 @@ tags:
   - Accounting
   - Payments
   - B2B
+  - Financial Data
 url: >-
   https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/apis.yml
 created: '2026-03-16'
-modified: '2026-03-16'
+modified: '2026-03-26'
 specificationVersion: '0.19'
 apis:
-  - aid: rutter:rutter-api
-    name: Rutter API
+  - aid: rutter:commerce-api
+    name: Rutter Commerce API
     description: >-
-      The Rutter unified API allows developers to connect to over 60 commerce,
-      payments, accounting, and ads platforms through a single REST API,
-      enabling reading and writing of business financial data across major
-      platforms with a unified data model.
-    humanURL: https://docs.rutter.com/
+      The Rutter Commerce API enables reading and writing data to all major
+      commerce platforms through a unified API, supporting platforms like
+      Shopify, WooCommerce, Amazon, and more.
+    humanURL: https://www.rutter.com/product/commerce-api
     tags:
-      - Unified API
       - Commerce
-      - Accounting
-      - Payments
+      - Unified API
+      - E-Commerce
     properties:
       - type: Documentation
         url: https://docs.rutter.com/
-      - type: Reference
-        url: https://docs.rutter.com/rest/2023-02-07/basics
+      - type: ProductPage
+        url: https://www.rutter.com/product/commerce-api
+  - aid: rutter:accounting-api
+    name: Rutter Accounting API
+    description: >-
+      The Rutter Accounting API provides a unified interface to read and write
+      data to all major accounting platforms including QuickBooks, Xero,
+      Freshbooks, and Zoho Books.
+    humanURL: https://www.rutter.com/product/accounting-api
+    tags:
+      - Accounting
+      - Unified API
+      - Financial Data
+    properties:
+      - type: Documentation
+        url: https://docs.rutter.com/
+      - type: ProductPage
+        url: https://www.rutter.com/product/accounting-api
+  - aid: rutter:payments-api
+    name: Rutter Payments API
+    description: >-
+      The Rutter Payments API provides a unified interface to read and write
+      data to all major payment platforms through a single REST API.
+    humanURL: https://www.rutter.com/product/payments-api
+    tags:
+      - Payments
+      - Unified API
+      - Financial Data
+    properties:
+      - type: Documentation
+        url: https://docs.rutter.com/
+      - type: ProductPage
+        url: https://www.rutter.com/product/payments-api
 common:
   - type: Website
     url: https://www.rutter.com/
   - type: Documentation
     url: https://docs.rutter.com/
+  - type: Pricing
+    url: https://www.rutter.com/pricing
+  - type: Blog
+    url: https://www.rutter.com/blog
+  - type: Integrations
+    url: https://www.rutter.com/integrations
+  - type: APIs
+    url: https://www.rutter.com/our-features/apis
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
