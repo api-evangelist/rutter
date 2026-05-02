@@ -1,0 +1,104 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "rutter": "https://www.rutter.com/vocab/",
+    "Connection": {
+      "@id": "rutter:Connection",
+      "@type": "@id"
+    },
+    "id": "@id",
+    "platform": {
+      "@id": "rutter:platform",
+      "@type": "schema:Text"
+    },
+    "status": {
+      "@id": "schema:status",
+      "@type": "schema:Text"
+    },
+    "created_at": {
+      "@id": "schema:dateCreated",
+      "@type": "schema:DateTime"
+    },
+    "updated_at": {
+      "@id": "schema:dateModified",
+      "@type": "schema:DateTime"
+    },
+    "Invoice": {
+      "@id": "schema:Invoice",
+      "@type": "@id"
+    },
+    "customer_id": {
+      "@id": "schema:customer",
+      "@type": "@id"
+    },
+    "amount_due": {
+      "@id": "schema:totalPaymentDue",
+      "@type": "schema:MonetaryAmount"
+    },
+    "currency": {
+      "@id": "schema:currency",
+      "@type": "schema:Text"
+    },
+    "due_date": {
+      "@id": "schema:paymentDueDate",
+      "@type": "schema:Date"
+    },
+    "line_items": {
+      "@id": "schema:itemListElement",
+      "@container": "@list"
+    },
+    "Order": {
+      "@id": "schema:Order",
+      "@type": "@id"
+    },
+    "total_price": {
+      "@id": "schema:price",
+      "@type": "schema:Number"
+    },
+    "Product": {
+      "@id": "schema:Product",
+      "@type": "@id"
+    },
+    "title": {
+      "@id": "schema:name",
+      "@type": "schema:Text"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "schema:Text"
+    },
+    "price": {
+      "@id": "schema:price",
+      "@type": "schema:Number"
+    },
+    "Customer": {
+      "@id": "schema:Person",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "schema:Text"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "schema:Text"
+    },
+    "BankAccount": {
+      "@id": "schema:BankAccount",
+      "@type": "@id"
+    },
+    "balance": {
+      "@id": "schema:amount",
+      "@type": "schema:Number"
+    },
+    "access_token": {
+      "@id": "rutter:accessToken",
+      "@type": "schema:Text"
+    },
+    "next_cursor": {
+      "@id": "rutter:nextCursor",
+      "@type": "schema:Text"
+    }
+  }
+}

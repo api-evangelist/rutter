@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://api-evangelist.github.io/rutter/json-schema/rutter-order-schema.json",
+  "title": "Rutter Order",
+  "description": "A commerce order from a connected platform via the Rutter Unified API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the order"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "The ID of the customer who placed the order"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "processing", "fulfilled", "cancelled"],
+      "description": "Current order status"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code"
+    },
+    "total_price": {
+      "type": "number",
+      "format": "double",
+      "description": "Total order price"
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OrderLineItem"
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["id", "status"],
+  "$defs": {
+    "OrderLineItem": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "string"
+        },
+        "variant_id": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer"
+        },
+        "unit_price": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    }
+  }
+}

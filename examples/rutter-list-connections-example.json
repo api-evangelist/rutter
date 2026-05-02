@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://production.rutterapi.com/versioned/connections",
+    "headers": {
+      "Authorization": "Basic base64(client_id:client_secret)",
+      "X-Rutter-Version": "2024-08-31"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "connections": [
+        {
+          "id": "conn_abc123",
+          "platform": "quickbooks",
+          "status": "active",
+          "created_at": "2026-01-15T10:30:00Z",
+          "updated_at": "2026-04-20T08:15:00Z"
+        },
+        {
+          "id": "conn_def456",
+          "platform": "shopify",
+          "status": "active",
+          "created_at": "2026-02-01T14:00:00Z",
+          "updated_at": "2026-04-25T12:00:00Z"
+        }
+      ],
+      "next_cursor": null
+    }
+  }
+}

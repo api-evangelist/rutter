@@ -1,0 +1,286 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Rutter Financial Data Sync"
+  description: >-
+    Unified workflow for syncing financial data across accounting platforms including
+    QuickBooks, Xero, NetSuite, and Freshbooks. Enables finance teams to read and
+    reconcile accounts, transactions, invoices, bills, and expenses through a single
+    interface regardless of the underlying accounting platform.
+  tags:
+    - Accounting
+    - B2B
+    - Financial Data
+    - Invoices
+    - Reconciliation
+    - Unified API
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      RUTTER_CLIENT_ID: RUTTER_CLIENT_ID
+      RUTTER_CLIENT_SECRET: RUTTER_CLIENT_SECRET
+
+capability:
+  consumes:
+    - import: rutter
+      location: ./shared/unified-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: rutter-financial-sync-api
+      description: "Unified REST API for financial data synchronization across accounting platforms."
+      resources:
+        - path: /v1/connections
+          name: connections
+          description: "Platform connections management"
+          operations:
+            - method: GET
+              name: list-connections
+              description: "List all connected accounting platforms"
+              call: "rutter.list-connections"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: get-connection
+              description: "Get a specific connection by ID"
+              call: "rutter.get-connection"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                connectionId: "rest.path.connectionId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/accounts
+          name: accounts
+          description: "Chart of accounts"
+          operations:
+            - method: GET
+              name: list-accounts
+              description: "List all accounts from connected accounting platform"
+              call: "rutter.list-accounts"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+                cursor: "rest.query.cursor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/transactions
+          name: transactions
+          description: "Financial transactions"
+          operations:
+            - method: GET
+              name: list-transactions
+              description: "List financial transactions from connected platform"
+              call: "rutter.list-transactions"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+                cursor: "rest.query.cursor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/invoices
+          name: invoices
+          description: "Invoices"
+          operations:
+            - method: GET
+              name: list-invoices
+              description: "List invoices from connected accounting platform"
+              call: "rutter.list-invoices"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-invoice
+              description: "Create a new invoice in connected accounting platform"
+              call: "rutter.create-invoice"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/invoices/{invoiceId}
+          name: invoice
+          description: "Single invoice"
+          operations:
+            - method: GET
+              name: get-invoice
+              description: "Get a specific invoice by ID"
+              call: "rutter.get-invoice"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+                invoiceId: "rest.path.invoiceId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/bills
+          name: bills
+          description: "Bills (vendor invoices)"
+          operations:
+            - method: GET
+              name: list-bills
+              description: "List bills from connected accounting platform"
+              call: "rutter.list-bills"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-bill
+              description: "Create a new bill in connected accounting platform"
+              call: "rutter.create-bill"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/expenses
+          name: expenses
+          description: "Expense records"
+          operations:
+            - method: GET
+              name: list-expenses
+              description: "List expenses from connected accounting platform"
+              call: "rutter.list-expenses"
+              with:
+                X-Rutter-Version: "rest.header.x-rutter-version"
+                access_token: "rest.query.access_token"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: rutter-financial-sync-mcp
+      transport: http
+      description: "MCP server for AI-assisted financial data sync and reconciliation."
+      tools:
+        - name: list-connections
+          description: "List all connected accounting platforms (QuickBooks, Xero, NetSuite, etc.)"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "rutter.list-connections"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-connection
+          description: "Get details for a specific accounting platform connection"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "rutter.get-connection"
+          with:
+            connectionId: "tools.connectionId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-accounts
+          description: "List chart of accounts from connected accounting platform"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "rutter.list-accounts"
+          with:
+            access_token: "tools.access_token"
+            cursor: "tools.cursor"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-transactions
+          description: "List financial transactions from connected accounting platform"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "rutter.list-transactions"
+          with:
+            access_token: "tools.access_token"
+            updated_at_min: "tools.updated_at_min"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-invoices
+          description: "List invoices from connected accounting platform"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "rutter.list-invoices"
+          with:
+            access_token: "tools.access_token"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-invoice
+          description: "Get a specific invoice by ID"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "rutter.get-invoice"
+          with:
+            access_token: "tools.access_token"
+            invoiceId: "tools.invoiceId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-invoice
+          description: "Create a new invoice in the connected accounting platform"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "rutter.create-invoice"
+          with:
+            access_token: "tools.access_token"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-bills
+          description: "List vendor bills from connected accounting platform"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "rutter.list-bills"
+          with:
+            access_token: "tools.access_token"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-bill
+          description: "Create a new vendor bill in the connected accounting platform"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "rutter.create-bill"
+          with:
+            access_token: "tools.access_token"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-expenses
+          description: "List expense records from connected accounting platform"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "rutter.list-expenses"
+          with:
+            access_token: "tools.access_token"
+          outputParameters:
+            - type: object
+              mapping: "$."

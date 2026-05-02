@@ -1,0 +1,130 @@
+vocabulary:
+  name: Rutter Unified API Vocabulary
+  description: >-
+    Vocabulary and terminology for the Rutter Unified API for B2B financial products.
+    Covers connections, accounting, commerce, payments, banking, and ads domains
+    across 60+ integrated platforms.
+  version: '2026-05-02'
+  terms:
+    - term: Connection
+      definition: >-
+        A linked integration between a customer's Rutter account and a third-party
+        business platform (e.g., QuickBooks, Shopify, Amazon). Each connection has
+        a unique access_token used to identify which platform's data to read/write.
+      tags:
+        - Authentication
+        - Integration
+    - term: Access Token
+      definition: >-
+        A unique token per connection that identifies the specific platform connection
+        in API requests. Passed as the access_token query parameter.
+      tags:
+        - Authentication
+    - term: Rutter Link
+      definition: >-
+        The frontend authentication component that allows end users to connect
+        their business platforms (accounting, commerce, etc.) to Rutter. Returns
+        a public_token that is exchanged for a permanent access_token.
+      tags:
+        - Authentication
+        - Frontend
+    - term: Unified Data Model
+      definition: >-
+        Rutter's normalized data schema that represents data from diverse platforms
+        (QuickBooks, Xero, NetSuite, Shopify, etc.) in a consistent format, enabling
+        platform-agnostic reads and writes.
+      tags:
+        - Data Model
+    - term: Platform Data
+      definition: >-
+        Raw, platform-specific data returned when the expand=platform_data parameter
+        is used. Contains fields that are not part of the unified model but are
+        specific to the connected platform.
+      tags:
+        - Data Model
+    - term: Cursor
+      definition: >-
+        A pagination pointer returned as next_cursor in list responses. Pass it as
+        the cursor query parameter in the next request to retrieve the following page.
+      tags:
+        - Pagination
+    - term: Idempotency Key
+      definition: >-
+        A unique key passed in the Idempotency-Key header for POST requests that
+        ensures the request is processed only once, even if submitted multiple times.
+        Critical for financial data writes.
+      tags:
+        - Safety
+        - Writes
+    - term: Async Response
+      definition: >-
+        A deferred response mode where the API returns a job ID and processes the
+        request in the background. Used for operations that take time to sync from
+        the underlying platform.
+      tags:
+        - Performance
+    - term: Webhook
+      definition: >-
+        An event notification endpoint configured to receive real-time notifications
+        when data changes in connected platforms. Supports connection, order, and
+        product events.
+      tags:
+        - Events
+        - Notifications
+    - term: X-Rutter-Signature
+      definition: >-
+        A SHA256 HMAC signature included in webhook delivery headers for verifying
+        that the webhook payload originated from Rutter.
+      tags:
+        - Security
+        - Webhooks
+    - term: X-Rutter-Version
+      definition: >-
+        The required API version header specifying which version of the API contract
+        to use (e.g., 2024-08-31). Enables versioned upgrades without breaking changes.
+      tags:
+        - Versioning
+    - term: Account
+      definition: >-
+        A chart of accounts entry from a connected accounting platform representing
+        an asset, liability, equity, revenue, or expense category.
+      tags:
+        - Accounting
+    - term: Invoice
+      definition: >-
+        A request for payment from a business to a customer, synced from connected
+        accounting platforms like QuickBooks, Xero, or NetSuite.
+      tags:
+        - Accounting
+        - Commerce
+    - term: Bill
+      definition: >-
+        A vendor invoice representing money owed by the business to a supplier,
+        synced from connected accounting platforms.
+      tags:
+        - Accounting
+    - term: Expense
+      definition: >-
+        A recorded expenditure in the connected accounting platform, representing
+        money spent by the business.
+      tags:
+        - Accounting
+    - term: Order
+      definition: >-
+        A purchase transaction from a connected commerce platform (Shopify, Amazon,
+        WooCommerce, etc.) containing line items, customer info, and fulfillment status.
+      tags:
+        - Commerce
+    - term: Fulfillment
+      definition: >-
+        The shipping or delivery of order line items to the customer, including
+        tracking numbers and carrier information.
+      tags:
+        - Commerce
+        - Logistics
+    - term: Product Variant
+      definition: >-
+        A specific variation of a product (e.g., size, color, SKU) within the
+        connected commerce platform's catalog.
+      tags:
+        - Commerce

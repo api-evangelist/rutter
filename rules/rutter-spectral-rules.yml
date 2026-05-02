@@ -1,0 +1,91 @@
+extends: spectral:oas
+rules:
+  rutter-version-header-required:
+    description: All Rutter API requests must include the X-Rutter-Version header
+    message: "Operation '{{description}}' should document the X-Rutter-Version header parameter"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: parameters
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: object
+            properties:
+              name:
+                const: X-Rutter-Version
+              in:
+                const: header
+
+  rutter-access-token-required:
+    description: Most Rutter API operations require an access_token query parameter
+    message: "Operation '{{description}}' that reads platform data should have access_token parameter"
+    severity: warn
+    given: "$.paths[*][get]"
+    then:
+      field: parameters
+      function: truthy
+
+  rutter-operation-id-camel-case:
+    description: All Rutter operationIds should use camelCase
+    message: "OperationId '{{value}}' should use camelCase naming"
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  rutter-tags-title-case:
+    description: All tags must use Title Case
+    message: "Tag '{{value}}' should use Title Case"
+    severity: warn
+    given: "$.paths[*][*].tags[*]"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 &-]*$"
+
+  rutter-response-200-required:
+    description: All operations must have a 200 success response
+    message: "Operation '{{description}}' is missing a 200 success response"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["200"]
+            - required: ["201"]
+            - required: ["204"]
+
+  rutter-pagination-cursor:
+    description: List operations should support cursor-based pagination
+    message: "List operation '{{description}}' should support cursor pagination"
+    severity: info
+    given: "$.paths[*].get"
+    then:
+      field: parameters
+      function: truthy
+
+  rutter-idempotency-key-on-writes:
+    description: POST operations that create resources should document Idempotency-Key header
+    message: "Create operation '{{description}}' should document the Idempotency-Key header"
+    severity: info
+    given: "$.paths[*].post"
+    then:
+      field: requestBody
+      function: truthy
+
+  rutter-basic-auth-documented:
+    description: The API must document Basic auth security scheme
+    message: "API must define basicAuth security scheme"
+    severity: error
+    given: "$.components.securitySchemes"
+    then:
+      field: basicAuth
+      function: truthy

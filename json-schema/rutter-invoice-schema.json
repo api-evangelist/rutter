@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://api-evangelist.github.io/rutter/json-schema/rutter-invoice-schema.json",
+  "title": "Rutter Invoice",
+  "description": "An invoice from a connected accounting platform via the Rutter Unified API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the invoice"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "The ID of the customer this invoice belongs to"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "open", "paid", "voided"],
+      "description": "Current invoice status"
+    },
+    "amount_due": {
+      "type": "number",
+      "format": "double",
+      "description": "Total amount due on the invoice"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code",
+      "examples": ["USD", "EUR", "GBP"]
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the invoice is due"
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/LineItem"
+      },
+      "description": "Line items on the invoice"
+    }
+  },
+  "required": ["id", "status"],
+  "$defs": {
+    "LineItem": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "unit_price": {
+          "type": "number",
+          "format": "double"
+        },
+        "total_amount": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    }
+  }
+}

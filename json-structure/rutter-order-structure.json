@@ -1,0 +1,74 @@
+{
+  "title": "Rutter Order",
+  "description": "Structure of the Rutter order object from connected commerce platforms",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "Unique identifier for the order"
+    },
+    {
+      "name": "customer_id",
+      "type": "string",
+      "required": false,
+      "description": "Customer who placed the order"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "required": true,
+      "description": "Order status: pending, processing, fulfilled, or cancelled"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "required": false,
+      "description": "ISO 4217 currency code"
+    },
+    {
+      "name": "total_price",
+      "type": "number",
+      "required": false,
+      "description": "Total order price"
+    },
+    {
+      "name": "line_items",
+      "type": "array",
+      "required": false,
+      "description": "Line items in the order",
+      "items": {
+        "type": "object",
+        "fields": [
+          {
+            "name": "product_id",
+            "type": "string",
+            "description": "Product identifier"
+          },
+          {
+            "name": "quantity",
+            "type": "integer",
+            "description": "Quantity ordered"
+          },
+          {
+            "name": "unit_price",
+            "type": "number",
+            "description": "Price per unit"
+          }
+        ]
+      }
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "required": false,
+      "description": "When the order was created"
+    },
+    {
+      "name": "updated_at",
+      "type": "datetime",
+      "required": false,
+      "description": "When the order was last updated"
+    }
+  ]
+}

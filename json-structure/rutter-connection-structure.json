@@ -1,0 +1,36 @@
+{
+  "title": "Rutter Connection",
+  "description": "Structure of the Rutter connection object",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "Unique identifier for the connection"
+    },
+    {
+      "name": "platform",
+      "type": "string",
+      "required": true,
+      "description": "Connected platform (quickbooks, shopify, amazon, etc.)"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "required": true,
+      "description": "Connection status: active, inactive, or error"
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "required": false,
+      "description": "When the connection was created"
+    },
+    {
+      "name": "updated_at",
+      "type": "datetime",
+      "required": false,
+      "description": "When the connection was last updated"
+    }
+  ]
+}

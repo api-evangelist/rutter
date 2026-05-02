@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://production.rutterapi.com/versioned/invoices?access_token=acc_xyz789",
+    "headers": {
+      "Authorization": "Basic base64(client_id:client_secret)",
+      "X-Rutter-Version": "2024-08-31"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "invoices": [
+        {
+          "id": "inv_001",
+          "customer_id": "cust_abc",
+          "status": "open",
+          "amount_due": 2500.00,
+          "currency": "USD",
+          "due_date": "2026-06-01",
+          "line_items": [
+            {
+              "description": "Professional Services - May 2026",
+              "quantity": 10,
+              "unit_price": 250.00,
+              "total_amount": 2500.00
+            }
+          ]
+        }
+      ],
+      "next_cursor": null
+    }
+  }
+}
