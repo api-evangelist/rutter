@@ -127,6 +127,15 @@ common:
   - type: NaftikoCapabilities
     url: >-
       https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/capabilities/commerce-operations.yaml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-connection-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-invoice-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-order-schema.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

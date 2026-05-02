@@ -1,0 +1,54 @@
+{
+  "title": "Rutter Invoice",
+  "description": "Structure of an invoice from a connected accounting platform via the Rutter Unified API",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "Unique identifier for the invoice"
+    },
+    {
+      "name": "customer_id",
+      "type": "string",
+      "required": false,
+      "description": "The ID of the customer this invoice belongs to"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "required": true,
+      "description": "Current invoice status: draft, open, paid, voided"
+    },
+    {
+      "name": "amount_due",
+      "type": "number",
+      "required": false,
+      "description": "Total amount due on the invoice"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "required": false,
+      "description": "ISO 4217 currency code (e.g., USD, EUR, GBP)"
+    },
+    {
+      "name": "due_date",
+      "type": "string (date)",
+      "required": false,
+      "description": "Date the invoice is due (YYYY-MM-DD)"
+    },
+    {
+      "name": "line_items",
+      "type": "array of objects",
+      "required": false,
+      "description": "Line items on the invoice",
+      "fields": [
+        {"name": "description", "type": "string"},
+        {"name": "quantity", "type": "number"},
+        {"name": "unit_price", "type": "number"},
+        {"name": "total_amount", "type": "number"}
+      ]
+    }
+  ]
+}

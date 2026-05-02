@@ -80,6 +80,7 @@ Unified interface for reading and writing data to all major payment platforms.
 ### JSON Structure
 
 - [Connection](json-structure/rutter-connection-structure.json)
+- [Invoice](json-structure/rutter-invoice-structure.json)
 - [Order](json-structure/rutter-order-structure.json)
 
 ### Examples
