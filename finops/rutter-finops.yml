@@ -1,160 +1,61 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Rutter
+providerId: rutter
+created: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
+tags:
+  - Accounting
+  - Commerce
+  - Unified API
+  - FinOps
+  - FOCUS
+description: 'FOCUS-aligned FinOps placeholder for Rutter: production pricing is custom-quoted (Contact
+  Sales), so meters and FOCUS columns are minimal until contract terms are visible.'
+sources:
+  - https://www.rutter.com/pricing
+notes: Rutter does not publish unit prices, billing meters, or invoice line-item structure publicly. This
+  file is intentionally a Contact-Sales placeholder rather than a fabricated FinOps shape.
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: Rutter
-providerId: rutter
-publisherName: Rutter
-serviceCategory: API
-created: '2026-05-04'
-modified: '2026-05-04'
-tags:
-  - Accounting
-  - B2B
-  - Commerce
-  - Financial Data
-  - Payments
-  - Unified API
-  - FinOps
-  - Cost Management
-  - FOCUS
-description: FinOps framework definition for the Rutter API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+publisherName: Rutter, Inc.
+serviceCategory: Unified API / Commerce + Accounting Integration
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Contact Sales / Custom Quote
+  billingFrequency: Per-Contract
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
-    - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
   ServiceName: Rutter
-  ServiceCategory: Developer Tools / API
+  ServiceCategory: Unified API
   ProviderName: Rutter
-  PublisherName: Rutter
-  InvoiceIssuerName: Rutter
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Rutter, Inc.
+  InvoiceIssuerName: Rutter, Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: contracted_access
+    unit: varies
     aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Rutter Unified API
-    baseURL: https://production.rutterapi.com/versioned
-    tags:
-      - Accounting
-      - B2B
-      - Commerce
-      - Financial Data
-      - Payments
-      - Unified API
-    serviceName: Rutter Unified API
-    serviceCategory: API
-  - name: Rutter Commerce API
-    baseURL: ''
-    tags:
-      - Commerce
-      - E-Commerce
-      - Unified API
-    serviceName: Rutter Commerce API
-    serviceCategory: API
-  - name: Rutter Accounting API
-    baseURL: ''
-    tags:
-      - Accounting
-      - Financial Data
-      - Unified API
-    serviceName: Rutter Accounting API
-    serviceCategory: API
-  - name: Rutter Payments API
-    baseURL: ''
-    tags:
-      - Financial Data
-      - Payments
-      - Unified API
-    serviceName: Rutter Payments API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+principles:
+  - name: Visibility
+    description: Without published meters, visibility depends on Rutter's customer dashboard and any usage
+      reports furnished under contract. Capture connection counts and call volumes from the Rutter dashboard.
+  - name: Allocation
+    description: Tag Rutter consumption by the internal product or workflow that triggers each connection
+      (e.g. onboarding, reconciliation) so contract spend can be attributed.
+  - name: Optimization
+    description: Reduce redundant connector polling, prefer webhook-driven sync where Rutter supports it,
+      and consolidate connections per end-customer to keep contracted volume in line.
+  - name: Accountability
+    description: Assign an owner for the Rutter contract; reconcile invoiced amounts against the customer
+      dashboard and downstream platform usage during contract review cycles.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
