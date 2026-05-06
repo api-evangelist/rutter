@@ -1,286 +1,921 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Rutter Financial Data Sync"
-  description: >-
-    Unified workflow for syncing financial data across accounting platforms including
-    QuickBooks, Xero, NetSuite, and Freshbooks. Enables finance teams to read and
-    reconcile accounts, transactions, invoices, bills, and expenses through a single
-    interface regardless of the underlying accounting platform.
+  label: Rutter Financial Data Sync
+  description: Unified workflow for syncing financial data across accounting platforms including QuickBooks, Xero, NetSuite,
+    and Freshbooks. Enables finance teams to read and reconcile accounts, transactions, invoices, bills, and expenses through
+    a single interface regardless of the underlying accounting platform.
   tags:
-    - Accounting
-    - B2B
-    - Financial Data
-    - Invoices
-    - Reconciliation
-    - Unified API
-  created: "2026-05-02"
-  modified: "2026-05-02"
-
+  - Accounting
+  - B2B
+  - Financial Data
+  - Invoices
+  - Reconciliation
+  - Unified API
+  created: '2026-05-02'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      RUTTER_CLIENT_ID: RUTTER_CLIENT_ID
-      RUTTER_CLIENT_SECRET: RUTTER_CLIENT_SECRET
-
+- namespace: env
+  keys:
+    RUTTER_CLIENT_ID: RUTTER_CLIENT_ID
+    RUTTER_CLIENT_SECRET: RUTTER_CLIENT_SECRET
 capability:
   consumes:
-    - import: rutter
-      location: ./shared/unified-api.yaml
-
+  - type: http
+    namespace: rutter
+    baseUri: https://production.rutterapi.com/versioned
+    description: Rutter Unified API for B2B financial platform data
+    authentication:
+      type: basic
+      username: '{{RUTTER_CLIENT_ID}}'
+      password: '{{RUTTER_CLIENT_SECRET}}'
+    resources:
+    - name: connections
+      path: /connections
+      description: Manage platform connections
+      operations:
+      - name: list-connections
+        method: GET
+        description: Retrieve all connections for the authenticated client
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version (e.g. 2024-08-31)
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-connection
+        method: GET
+        description: Retrieve details for a specific platform connection
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+          description: Connection identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: exchange-token
+        method: POST
+        description: Exchange Rutter Link public token for permanent access token
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            public_token: '{{tools.public_token}}'
+    - name: accounts
+      path: /accounts
+      description: Chart of accounts from connected accounting platforms
+      operations:
+      - name: list-accounts
+        method: GET
+        description: Retrieve chart of accounts from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: transactions
+      path: /transactions
+      description: Financial transactions from connected platforms
+      operations:
+      - name: list-transactions
+        method: GET
+        description: Retrieve financial transactions from the connected platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: updated_at_min
+          in: query
+          type: string
+          required: false
+          description: Filter updated after this timestamp
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: invoices
+      path: /invoices
+      description: Invoices from connected accounting platforms
+      operations:
+      - name: list-invoices
+        method: GET
+        description: Retrieve invoices from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-invoice
+        method: POST
+        description: Create a new invoice in the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            customer_id: '{{tools.customer_id}}'
+            currency: '{{tools.currency}}'
+            due_date: '{{tools.due_date}}'
+      - name: get-invoice
+        method: GET
+        description: Retrieve a specific invoice by ID
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: invoiceId
+          in: path
+          type: string
+          required: true
+          description: Invoice identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: bills
+      path: /bills
+      description: Bills (vendor invoices) from connected accounting platforms
+      operations:
+      - name: list-bills
+        method: GET
+        description: Retrieve bills from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-bill
+        method: POST
+        description: Create a new bill in the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            vendor_id: '{{tools.vendor_id}}'
+            currency: '{{tools.currency}}'
+            due_date: '{{tools.due_date}}'
+    - name: expenses
+      path: /expenses
+      description: Expense records from connected accounting platforms
+      operations:
+      - name: list-expenses
+        method: GET
+        description: Retrieve expense records from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orders
+      path: /orders
+      description: Orders from connected commerce platforms
+      operations:
+      - name: list-orders
+        method: GET
+        description: Retrieve orders from the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: expand
+          in: query
+          type: string
+          required: false
+          description: Expand with platform_data
+        - name: updated_at_min
+          in: query
+          type: string
+          required: false
+          description: Filter updated after this timestamp
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-order
+        method: POST
+        description: Create a new order in the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            customer_id: '{{tools.customer_id}}'
+            currency: '{{tools.currency}}'
+      - name: get-order
+        method: GET
+        description: Retrieve a specific order by ID
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: orderId
+          in: path
+          type: string
+          required: true
+          description: Order identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: fulfill-order
+        method: POST
+        description: Mark an order as fulfilled with fulfillment details
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: orderId
+          in: path
+          type: string
+          required: true
+          description: Order identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            tracking_number: '{{tools.tracking_number}}'
+            carrier: '{{tools.carrier}}'
+    - name: products
+      path: /products
+      description: Products from connected commerce platforms
+      operations:
+      - name: list-products
+        method: GET
+        description: Retrieve products from the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-product
+        method: POST
+        description: Create a new product in the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            title: '{{tools.title}}'
+            price: '{{tools.price}}'
+      - name: get-product
+        method: GET
+        description: Retrieve a specific product by ID
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: productId
+          in: path
+          type: string
+          required: true
+          description: Product identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-product
+        method: PUT
+        description: Update an existing product in the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: productId
+          in: path
+          type: string
+          required: true
+          description: Product identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            title: '{{tools.title}}'
+            price: '{{tools.price}}'
+    - name: customers
+      path: /customers
+      description: Customers from connected commerce or accounting platforms
+      operations:
+      - name: list-customers
+        method: GET
+        description: Retrieve customers from the connected platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-customer
+        method: GET
+        description: Retrieve details for a specific customer
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: customerId
+          in: path
+          type: string
+          required: true
+          description: Customer identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: bank-accounts
+      path: /bank-accounts
+      description: Bank accounts from connected banking platforms
+      operations:
+      - name: list-bank-accounts
+        method: GET
+        description: Retrieve bank accounts from the connected banking platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: webhooks
+      path: /config-webhooks
+      description: Webhook configuration and management
+      operations:
+      - name: list-webhooks
+        method: GET
+        description: Retrieve all configured webhooks
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-webhook
+        method: POST
+        description: Configure a new webhook endpoint
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            url: '{{tools.url}}'
+            events: '{{tools.events}}'
+      - name: delete-webhook
+        method: DELETE
+        description: Remove a webhook configuration
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: webhookId
+          in: path
+          type: string
+          required: true
+          description: Webhook identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: rutter-financial-sync-api
-      description: "Unified REST API for financial data synchronization across accounting platforms."
-      resources:
-        - path: /v1/connections
-          name: connections
-          description: "Platform connections management"
-          operations:
-            - method: GET
-              name: list-connections
-              description: "List all connected accounting platforms"
-              call: "rutter.list-connections"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: GET
-              name: get-connection
-              description: "Get a specific connection by ID"
-              call: "rutter.get-connection"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                connectionId: "rest.path.connectionId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/accounts
-          name: accounts
-          description: "Chart of accounts"
-          operations:
-            - method: GET
-              name: list-accounts
-              description: "List all accounts from connected accounting platform"
-              call: "rutter.list-accounts"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                cursor: "rest.query.cursor"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/transactions
-          name: transactions
-          description: "Financial transactions"
-          operations:
-            - method: GET
-              name: list-transactions
-              description: "List financial transactions from connected platform"
-              call: "rutter.list-transactions"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                cursor: "rest.query.cursor"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/invoices
-          name: invoices
-          description: "Invoices"
-          operations:
-            - method: GET
-              name: list-invoices
-              description: "List invoices from connected accounting platform"
-              call: "rutter.list-invoices"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: POST
-              name: create-invoice
-              description: "Create a new invoice in connected accounting platform"
-              call: "rutter.create-invoice"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/invoices/{invoiceId}
-          name: invoice
-          description: "Single invoice"
-          operations:
-            - method: GET
-              name: get-invoice
-              description: "Get a specific invoice by ID"
-              call: "rutter.get-invoice"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                invoiceId: "rest.path.invoiceId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/bills
-          name: bills
-          description: "Bills (vendor invoices)"
-          operations:
-            - method: GET
-              name: list-bills
-              description: "List bills from connected accounting platform"
-              call: "rutter.list-bills"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: POST
-              name: create-bill
-              description: "Create a new bill in connected accounting platform"
-              call: "rutter.create-bill"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/expenses
-          name: expenses
-          description: "Expense records"
-          operations:
-            - method: GET
-              name: list-expenses
-              description: "List expenses from connected accounting platform"
-              call: "rutter.list-expenses"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: rutter-financial-sync-mcp
-      transport: http
-      description: "MCP server for AI-assisted financial data sync and reconciliation."
-      tools:
-        - name: list-connections
-          description: "List all connected accounting platforms (QuickBooks, Xero, NetSuite, etc.)"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-connections"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-connection
-          description: "Get details for a specific accounting platform connection"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "rutter.get-connection"
-          with:
-            connectionId: "tools.connectionId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-accounts
-          description: "List chart of accounts from connected accounting platform"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-accounts"
-          with:
-            access_token: "tools.access_token"
-            cursor: "tools.cursor"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-transactions
-          description: "List financial transactions from connected accounting platform"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-transactions"
-          with:
-            access_token: "tools.access_token"
-            updated_at_min: "tools.updated_at_min"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-invoices
-          description: "List invoices from connected accounting platform"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-invoices"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-invoice
-          description: "Get a specific invoice by ID"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "rutter.get-invoice"
-          with:
-            access_token: "tools.access_token"
-            invoiceId: "tools.invoiceId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: create-invoice
-          description: "Create a new invoice in the connected accounting platform"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "rutter.create-invoice"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-bills
-          description: "List vendor bills from connected accounting platform"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-bills"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: create-bill
-          description: "Create a new vendor bill in the connected accounting platform"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "rutter.create-bill"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-expenses
-          description: "List expense records from connected accounting platform"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-expenses"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: rutter-financial-sync-api
+    description: Unified REST API for financial data synchronization across accounting platforms.
+    resources:
+    - path: /v1/connections
+      name: connections
+      description: Platform connections management
+      operations:
+      - method: GET
+        name: list-connections
+        description: List all connected accounting platforms
+        call: rutter.list-connections
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: get-connection
+        description: Get a specific connection by ID
+        call: rutter.get-connection
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          connectionId: rest.path.connectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts
+      name: accounts
+      description: Chart of accounts
+      operations:
+      - method: GET
+        name: list-accounts
+        description: List all accounts from connected accounting platform
+        call: rutter.list-accounts
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          cursor: rest.query.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/transactions
+      name: transactions
+      description: Financial transactions
+      operations:
+      - method: GET
+        name: list-transactions
+        description: List financial transactions from connected platform
+        call: rutter.list-transactions
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          cursor: rest.query.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices
+      name: invoices
+      description: Invoices
+      operations:
+      - method: GET
+        name: list-invoices
+        description: List invoices from connected accounting platform
+        call: rutter.list-invoices
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create-invoice
+        description: Create a new invoice in connected accounting platform
+        call: rutter.create-invoice
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices/{invoiceId}
+      name: invoice
+      description: Single invoice
+      operations:
+      - method: GET
+        name: get-invoice
+        description: Get a specific invoice by ID
+        call: rutter.get-invoice
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          invoiceId: rest.path.invoiceId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bills
+      name: bills
+      description: Bills (vendor invoices)
+      operations:
+      - method: GET
+        name: list-bills
+        description: List bills from connected accounting platform
+        call: rutter.list-bills
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create-bill
+        description: Create a new bill in connected accounting platform
+        call: rutter.create-bill
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/expenses
+      name: expenses
+      description: Expense records
+      operations:
+      - method: GET
+        name: list-expenses
+        description: List expenses from connected accounting platform
+        call: rutter.list-expenses
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: rutter-financial-sync-mcp
+    transport: http
+    description: MCP server for AI-assisted financial data sync and reconciliation.
+    tools:
+    - name: list-connections
+      description: List all connected accounting platforms (QuickBooks, Xero, NetSuite, etc.)
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-connections
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-connection
+      description: Get details for a specific accounting platform connection
+      hints:
+        readOnly: true
+        openWorld: false
+      call: rutter.get-connection
+      with:
+        connectionId: tools.connectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-accounts
+      description: List chart of accounts from connected accounting platform
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-accounts
+      with:
+        access_token: tools.access_token
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-transactions
+      description: List financial transactions from connected accounting platform
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-transactions
+      with:
+        access_token: tools.access_token
+        updated_at_min: tools.updated_at_min
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-invoices
+      description: List invoices from connected accounting platform
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-invoices
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-invoice
+      description: Get a specific invoice by ID
+      hints:
+        readOnly: true
+        openWorld: false
+      call: rutter.get-invoice
+      with:
+        access_token: tools.access_token
+        invoiceId: tools.invoiceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-invoice
+      description: Create a new invoice in the connected accounting platform
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rutter.create-invoice
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bills
+      description: List vendor bills from connected accounting platform
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-bills
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-bill
+      description: Create a new vendor bill in the connected accounting platform
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rutter.create-bill
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-expenses
+      description: List expense records from connected accounting platform
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-expenses
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,298 +1,933 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Rutter Commerce Operations"
-  description: >-
-    Unified workflow for managing commerce operations across platforms like Shopify,
-    WooCommerce, Amazon, BigCommerce, and Magento. Enables operations teams to
-    read and manage orders, products, customers, and fulfillments through a single
+  label: Rutter Commerce Operations
+  description: Unified workflow for managing commerce operations across platforms like Shopify, WooCommerce, Amazon, BigCommerce,
+    and Magento. Enables operations teams to read and manage orders, products, customers, and fulfillments through a single
     interface regardless of the underlying commerce platform.
   tags:
-    - B2B
-    - Commerce
-    - E-Commerce
-    - Orders
-    - Products
-    - Unified API
-  created: "2026-05-02"
-  modified: "2026-05-02"
-
+  - B2B
+  - Commerce
+  - E-Commerce
+  - Orders
+  - Products
+  - Unified API
+  created: '2026-05-02'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      RUTTER_CLIENT_ID: RUTTER_CLIENT_ID
-      RUTTER_CLIENT_SECRET: RUTTER_CLIENT_SECRET
-
+- namespace: env
+  keys:
+    RUTTER_CLIENT_ID: RUTTER_CLIENT_ID
+    RUTTER_CLIENT_SECRET: RUTTER_CLIENT_SECRET
 capability:
   consumes:
-    - import: rutter
-      location: ./shared/unified-api.yaml
-
+  - type: http
+    namespace: rutter
+    baseUri: https://production.rutterapi.com/versioned
+    description: Rutter Unified API for B2B financial platform data
+    authentication:
+      type: basic
+      username: '{{RUTTER_CLIENT_ID}}'
+      password: '{{RUTTER_CLIENT_SECRET}}'
+    resources:
+    - name: connections
+      path: /connections
+      description: Manage platform connections
+      operations:
+      - name: list-connections
+        method: GET
+        description: Retrieve all connections for the authenticated client
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version (e.g. 2024-08-31)
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-connection
+        method: GET
+        description: Retrieve details for a specific platform connection
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+          description: Connection identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: exchange-token
+        method: POST
+        description: Exchange Rutter Link public token for permanent access token
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            public_token: '{{tools.public_token}}'
+    - name: accounts
+      path: /accounts
+      description: Chart of accounts from connected accounting platforms
+      operations:
+      - name: list-accounts
+        method: GET
+        description: Retrieve chart of accounts from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: transactions
+      path: /transactions
+      description: Financial transactions from connected platforms
+      operations:
+      - name: list-transactions
+        method: GET
+        description: Retrieve financial transactions from the connected platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: updated_at_min
+          in: query
+          type: string
+          required: false
+          description: Filter updated after this timestamp
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: invoices
+      path: /invoices
+      description: Invoices from connected accounting platforms
+      operations:
+      - name: list-invoices
+        method: GET
+        description: Retrieve invoices from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-invoice
+        method: POST
+        description: Create a new invoice in the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            customer_id: '{{tools.customer_id}}'
+            currency: '{{tools.currency}}'
+            due_date: '{{tools.due_date}}'
+      - name: get-invoice
+        method: GET
+        description: Retrieve a specific invoice by ID
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: invoiceId
+          in: path
+          type: string
+          required: true
+          description: Invoice identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: bills
+      path: /bills
+      description: Bills (vendor invoices) from connected accounting platforms
+      operations:
+      - name: list-bills
+        method: GET
+        description: Retrieve bills from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-bill
+        method: POST
+        description: Create a new bill in the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            vendor_id: '{{tools.vendor_id}}'
+            currency: '{{tools.currency}}'
+            due_date: '{{tools.due_date}}'
+    - name: expenses
+      path: /expenses
+      description: Expense records from connected accounting platforms
+      operations:
+      - name: list-expenses
+        method: GET
+        description: Retrieve expense records from the connected accounting platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orders
+      path: /orders
+      description: Orders from connected commerce platforms
+      operations:
+      - name: list-orders
+        method: GET
+        description: Retrieve orders from the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: expand
+          in: query
+          type: string
+          required: false
+          description: Expand with platform_data
+        - name: updated_at_min
+          in: query
+          type: string
+          required: false
+          description: Filter updated after this timestamp
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-order
+        method: POST
+        description: Create a new order in the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            customer_id: '{{tools.customer_id}}'
+            currency: '{{tools.currency}}'
+      - name: get-order
+        method: GET
+        description: Retrieve a specific order by ID
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: orderId
+          in: path
+          type: string
+          required: true
+          description: Order identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: fulfill-order
+        method: POST
+        description: Mark an order as fulfilled with fulfillment details
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: orderId
+          in: path
+          type: string
+          required: true
+          description: Order identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            tracking_number: '{{tools.tracking_number}}'
+            carrier: '{{tools.carrier}}'
+    - name: products
+      path: /products
+      description: Products from connected commerce platforms
+      operations:
+      - name: list-products
+        method: GET
+        description: Retrieve products from the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-product
+        method: POST
+        description: Create a new product in the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            title: '{{tools.title}}'
+            price: '{{tools.price}}'
+      - name: get-product
+        method: GET
+        description: Retrieve a specific product by ID
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: productId
+          in: path
+          type: string
+          required: true
+          description: Product identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-product
+        method: PUT
+        description: Update an existing product in the connected commerce platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: productId
+          in: path
+          type: string
+          required: true
+          description: Product identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            title: '{{tools.title}}'
+            price: '{{tools.price}}'
+    - name: customers
+      path: /customers
+      description: Customers from connected commerce or accounting platforms
+      operations:
+      - name: list-customers
+        method: GET
+        description: Retrieve customers from the connected platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-customer
+        method: GET
+        description: Retrieve details for a specific customer
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: customerId
+          in: path
+          type: string
+          required: true
+          description: Customer identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: bank-accounts
+      path: /bank-accounts
+      description: Bank accounts from connected banking platforms
+      operations:
+      - name: list-bank-accounts
+        method: GET
+        description: Retrieve bank accounts from the connected banking platform
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: access_token
+          in: query
+          type: string
+          required: true
+          description: Connection access token
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: webhooks
+      path: /config-webhooks
+      description: Webhook configuration and management
+      operations:
+      - name: list-webhooks
+        method: GET
+        description: Retrieve all configured webhooks
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-webhook
+        method: POST
+        description: Configure a new webhook endpoint
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            url: '{{tools.url}}'
+            events: '{{tools.events}}'
+      - name: delete-webhook
+        method: DELETE
+        description: Remove a webhook configuration
+        inputParameters:
+        - name: X-Rutter-Version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: webhookId
+          in: path
+          type: string
+          required: true
+          description: Webhook identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8081
-      namespace: rutter-commerce-ops-api
-      description: "Unified REST API for commerce operations across e-commerce platforms."
-      resources:
-        - path: /v1/orders
-          name: orders
-          description: "Commerce orders"
-          operations:
-            - method: GET
-              name: list-orders
-              description: "List orders from connected commerce platform"
-              call: "rutter.list-orders"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                cursor: "rest.query.cursor"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: POST
-              name: create-order
-              description: "Create a new order in connected commerce platform"
-              call: "rutter.create-order"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/orders/{orderId}
-          name: order
-          description: "Single order"
-          operations:
-            - method: GET
-              name: get-order
-              description: "Get a specific order by ID"
-              call: "rutter.get-order"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                orderId: "rest.path.orderId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/orders/{orderId}/fulfillments
-          name: fulfillments
-          description: "Order fulfillments"
-          operations:
-            - method: POST
-              name: fulfill-order
-              description: "Mark an order as fulfilled"
-              call: "rutter.fulfill-order"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                orderId: "rest.path.orderId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/products
-          name: products
-          description: "Product catalog"
-          operations:
-            - method: GET
-              name: list-products
-              description: "List products from connected commerce platform"
-              call: "rutter.list-products"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: POST
-              name: create-product
-              description: "Create a new product in connected commerce platform"
-              call: "rutter.create-product"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/products/{productId}
-          name: product
-          description: "Single product"
-          operations:
-            - method: GET
-              name: get-product
-              description: "Get a specific product by ID"
-              call: "rutter.get-product"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                productId: "rest.path.productId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: PUT
-              name: update-product
-              description: "Update a product in connected commerce platform"
-              call: "rutter.update-product"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                productId: "rest.path.productId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/customers
-          name: customers
-          description: "Customer data"
-          operations:
-            - method: GET
-              name: list-customers
-              description: "List customers from connected platform"
-              call: "rutter.list-customers"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/customers/{customerId}
-          name: customer
-          description: "Single customer"
-          operations:
-            - method: GET
-              name: get-customer
-              description: "Get a specific customer by ID"
-              call: "rutter.get-customer"
-              with:
-                X-Rutter-Version: "rest.header.x-rutter-version"
-                access_token: "rest.query.access_token"
-                customerId: "rest.path.customerId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9091
-      namespace: rutter-commerce-ops-mcp
-      transport: http
-      description: "MCP server for AI-assisted commerce operations across e-commerce platforms."
-      tools:
-        - name: list-orders
-          description: "List orders from connected commerce platform (Shopify, WooCommerce, Amazon)"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-orders"
-          with:
-            access_token: "tools.access_token"
-            cursor: "tools.cursor"
-            updated_at_min: "tools.updated_at_min"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-order
-          description: "Get a specific order by ID from connected commerce platform"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "rutter.get-order"
-          with:
-            access_token: "tools.access_token"
-            orderId: "tools.orderId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: create-order
-          description: "Create a new order in the connected commerce platform"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "rutter.create-order"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: fulfill-order
-          description: "Mark an order as fulfilled with tracking information"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "rutter.fulfill-order"
-          with:
-            access_token: "tools.access_token"
-            orderId: "tools.orderId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-products
-          description: "List products from connected commerce platform"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-products"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-product
-          description: "Get a specific product by ID from connected commerce platform"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "rutter.get-product"
-          with:
-            access_token: "tools.access_token"
-            productId: "tools.productId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: create-product
-          description: "Create a new product in the connected commerce platform"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "rutter.create-product"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: update-product
-          description: "Update an existing product in the connected commerce platform"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: true
-          call: "rutter.update-product"
-          with:
-            access_token: "tools.access_token"
-            productId: "tools.productId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-customers
-          description: "List customers from connected commerce or accounting platform"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "rutter.list-customers"
-          with:
-            access_token: "tools.access_token"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-customer
-          description: "Get a specific customer by ID from connected platform"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "rutter.get-customer"
-          with:
-            access_token: "tools.access_token"
-            customerId: "tools.customerId"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8081
+    namespace: rutter-commerce-ops-api
+    description: Unified REST API for commerce operations across e-commerce platforms.
+    resources:
+    - path: /v1/orders
+      name: orders
+      description: Commerce orders
+      operations:
+      - method: GET
+        name: list-orders
+        description: List orders from connected commerce platform
+        call: rutter.list-orders
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          cursor: rest.query.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create-order
+        description: Create a new order in connected commerce platform
+        call: rutter.create-order
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders/{orderId}
+      name: order
+      description: Single order
+      operations:
+      - method: GET
+        name: get-order
+        description: Get a specific order by ID
+        call: rutter.get-order
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          orderId: rest.path.orderId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders/{orderId}/fulfillments
+      name: fulfillments
+      description: Order fulfillments
+      operations:
+      - method: POST
+        name: fulfill-order
+        description: Mark an order as fulfilled
+        call: rutter.fulfill-order
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          orderId: rest.path.orderId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/products
+      name: products
+      description: Product catalog
+      operations:
+      - method: GET
+        name: list-products
+        description: List products from connected commerce platform
+        call: rutter.list-products
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create-product
+        description: Create a new product in connected commerce platform
+        call: rutter.create-product
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/products/{productId}
+      name: product
+      description: Single product
+      operations:
+      - method: GET
+        name: get-product
+        description: Get a specific product by ID
+        call: rutter.get-product
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          productId: rest.path.productId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: update-product
+        description: Update a product in connected commerce platform
+        call: rutter.update-product
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          productId: rest.path.productId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/customers
+      name: customers
+      description: Customer data
+      operations:
+      - method: GET
+        name: list-customers
+        description: List customers from connected platform
+        call: rutter.list-customers
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/customers/{customerId}
+      name: customer
+      description: Single customer
+      operations:
+      - method: GET
+        name: get-customer
+        description: Get a specific customer by ID
+        call: rutter.get-customer
+        with:
+          X-Rutter-Version: rest.header.x-rutter-version
+          access_token: rest.query.access_token
+          customerId: rest.path.customerId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9091
+    namespace: rutter-commerce-ops-mcp
+    transport: http
+    description: MCP server for AI-assisted commerce operations across e-commerce platforms.
+    tools:
+    - name: list-orders
+      description: List orders from connected commerce platform (Shopify, WooCommerce, Amazon)
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-orders
+      with:
+        access_token: tools.access_token
+        cursor: tools.cursor
+        updated_at_min: tools.updated_at_min
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-order
+      description: Get a specific order by ID from connected commerce platform
+      hints:
+        readOnly: true
+        openWorld: false
+      call: rutter.get-order
+      with:
+        access_token: tools.access_token
+        orderId: tools.orderId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-order
+      description: Create a new order in the connected commerce platform
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rutter.create-order
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fulfill-order
+      description: Mark an order as fulfilled with tracking information
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rutter.fulfill-order
+      with:
+        access_token: tools.access_token
+        orderId: tools.orderId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-products
+      description: List products from connected commerce platform
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-products
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-product
+      description: Get a specific product by ID from connected commerce platform
+      hints:
+        readOnly: true
+        openWorld: false
+      call: rutter.get-product
+      with:
+        access_token: tools.access_token
+        productId: tools.productId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-product
+      description: Create a new product in the connected commerce platform
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rutter.create-product
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-product
+      description: Update an existing product in the connected commerce platform
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rutter.update-product
+      with:
+        access_token: tools.access_token
+        productId: tools.productId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-customers
+      description: List customers from connected commerce or accounting platform
+      hints:
+        readOnly: true
+        openWorld: true
+      call: rutter.list-customers
+      with:
+        access_token: tools.access_token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-customer
+      description: Get a specific customer by ID from connected platform
+      hints:
+        readOnly: true
+        openWorld: false
+      call: rutter.get-customer
+      with:
+        access_token: tools.access_token
+        customerId: tools.customerId
+      outputParameters:
+      - type: object
+        mapping: $.
