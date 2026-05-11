@@ -136,6 +136,58 @@ common:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-order-schema.json
+integrations:
+  - name: Alibaba Commerce
+  - name: Amazon Commerce
+  - name: BigCommerce Commerce
+  - name: Chargebee Payments
+  - name: Chargebee Commerce
+  - name: Chargify Payments
+  - name: Chargify Commerce
+  - name: Clover Payments
+  - name: Clover Commerce
+  - name: eBay Commerce
+  - name: Etsy Commerce
+  - name: Exact Online Accounting
+  - name: FreeAgent Accounting
+  - name: FreshBooks Accounting
+  - name: Google Ads Ads
+  - name: GumRoad Commerce
+  - name: Kashflow Accounting
+  - name: Lazada Commerce
+  - name: Magento Commerce
+  - name: Mercado Libre Commerce
+  - name: Meta Ads
+  - name: Microsoft Dynamics... Accounting
+  - name: Mollie Payments
+  - name: Moneybird Accounting
+  - name: NetSuite Accounting
+  - name: PayPal Payments
+  - name: PrestaShop Commerce
+  - name: QuickBooks Desktop Accounting
+  - name: QuickBooks Online Accounting
+  - name: Recharge Payments
+  - name: Recurly Payments
+  - name: Sage Business Cloud Accounting
+  - name: Sage Intacct Accounting
+  - name: Shopee Commerce
+  - name: Shoper Commerce
+  - name: Shopify Commerce
+  - name: Shoplazza Commerce
+  - name: Shopline Commerce
+  - name: Square Payments
+  - name: Square Commerce
+  - name: Squarespace Commerce
+  - name: Stripe Payments
+  - name: Stripe Commerce
+  - name: TikTok Ads
+  - name: Walmart Commerce
+  - name: Wave Accounting
+  - name: Wix Commerce
+  - name: WooCommerce Commerce
+  - name: Xero Accounting
+  - name: Zoho Books Accounting
+  - name: Maxio
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
