@@ -1,0 +1,431 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rutter Unified API — Commerce
+  description: 'Rutter Unified API — Commerce. 10 operations. Lead operation: List Customers. Self-contained Naftiko capability
+    covering one Rutter business surface.'
+  tags:
+  - Rutter
+  - Commerce
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    RUTTER_API_KEY: RUTTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-commerce
+    baseUri: https://production.rutterapi.com/versioned
+    description: Rutter Unified API — Commerce business capability. Self-contained, no shared references.
+    resources:
+    - name: customers
+      path: /customers
+      operations:
+      - name: listcustomers
+        method: GET
+        description: List Customers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: customers-customerId
+      path: /customers/{customerId}
+      operations:
+      - name: getcustomer
+        method: GET
+        description: Get Customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: customerId
+          in: path
+          type: string
+          required: true
+    - name: orders
+      path: /orders
+      operations:
+      - name: listorders
+        method: GET
+        description: List Orders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: expand
+          in: query
+          type: string
+          description: Expand response with additional platform-specific data
+        - name: updated_at_min
+          in: query
+          type: string
+      - name: createorder
+        method: POST
+        description: Create Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orders-orderId
+      path: /orders/{orderId}
+      operations:
+      - name: getorder
+        method: GET
+        description: Get Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: orderId
+          in: path
+          type: string
+          required: true
+    - name: orders-orderId-fulfillments
+      path: /orders/{orderId}/fulfillments
+      operations:
+      - name: fulfillorder
+        method: POST
+        description: Fulfill Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: orderId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: products
+      path: /products
+      operations:
+      - name: listproducts
+        method: GET
+        description: List Products
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createproduct
+        method: POST
+        description: Create Product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: products-productId
+      path: /products/{productId}
+      operations:
+      - name: getproduct
+        method: GET
+        description: Get Product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: productId
+          in: path
+          type: string
+          required: true
+      - name: updateproduct
+        method: PUT
+        description: Update Product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: productId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.RUTTER_USER}}'
+      password: '{{env.RUTTER_PASS}}'
+  exposes:
+  - type: rest
+    namespace: unified-commerce-rest
+    port: 8080
+    description: REST adapter for Rutter Unified API — Commerce. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/customers
+      name: customers
+      description: REST surface for customers.
+      operations:
+      - method: GET
+        name: listcustomers
+        description: List Customers
+        call: unified-commerce.listcustomers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/customers/{customerid}
+      name: customers-customerid
+      description: REST surface for customers-customerId.
+      operations:
+      - method: GET
+        name: getcustomer
+        description: Get Customer
+        call: unified-commerce.getcustomer
+        with:
+          customerId: rest.customerId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders
+      name: orders
+      description: REST surface for orders.
+      operations:
+      - method: GET
+        name: listorders
+        description: List Orders
+        call: unified-commerce.listorders
+        with:
+          expand: rest.expand
+          updated_at_min: rest.updated_at_min
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorder
+        description: Create Order
+        call: unified-commerce.createorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders/{orderid}
+      name: orders-orderid
+      description: REST surface for orders-orderId.
+      operations:
+      - method: GET
+        name: getorder
+        description: Get Order
+        call: unified-commerce.getorder
+        with:
+          orderId: rest.orderId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders/{orderid}/fulfillments
+      name: orders-orderid-fulfillments
+      description: REST surface for orders-orderId-fulfillments.
+      operations:
+      - method: POST
+        name: fulfillorder
+        description: Fulfill Order
+        call: unified-commerce.fulfillorder
+        with:
+          orderId: rest.orderId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/products
+      name: products
+      description: REST surface for products.
+      operations:
+      - method: GET
+        name: listproducts
+        description: List Products
+        call: unified-commerce.listproducts
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createproduct
+        description: Create Product
+        call: unified-commerce.createproduct
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/products/{productid}
+      name: products-productid
+      description: REST surface for products-productId.
+      operations:
+      - method: GET
+        name: getproduct
+        description: Get Product
+        call: unified-commerce.getproduct
+        with:
+          productId: rest.productId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateproduct
+        description: Update Product
+        call: unified-commerce.updateproduct
+        with:
+          productId: rest.productId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-commerce-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rutter Unified API — Commerce. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-customers
+      description: List Customers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-commerce.listcustomers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-customer
+      description: Get Customer
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-commerce.getcustomer
+      with:
+        customerId: tools.customerId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-orders
+      description: List Orders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-commerce.listorders
+      with:
+        expand: tools.expand
+        updated_at_min: tools.updated_at_min
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-order
+      description: Create Order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-commerce.createorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-order
+      description: Get Order
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-commerce.getorder
+      with:
+        orderId: tools.orderId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fulfill-order
+      description: Fulfill Order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-commerce.fulfillorder
+      with:
+        orderId: tools.orderId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-products
+      description: List Products
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-commerce.listproducts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-product
+      description: Create Product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-commerce.createproduct
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-product
+      description: Get Product
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-commerce.getproduct
+      with:
+        productId: tools.productId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-product
+      description: Update Product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: unified-commerce.updateproduct
+      with:
+        productId: tools.productId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

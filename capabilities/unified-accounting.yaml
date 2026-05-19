@@ -1,0 +1,325 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rutter Unified API — Accounting
+  description: 'Rutter Unified API — Accounting. 8 operations. Lead operation: List Accounts. Self-contained Naftiko capability
+    covering one Rutter business surface.'
+  tags:
+  - Rutter
+  - Accounting
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    RUTTER_API_KEY: RUTTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-accounting
+    baseUri: https://production.rutterapi.com/versioned
+    description: Rutter Unified API — Accounting business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts
+      path: /accounts
+      operations:
+      - name: listaccounts
+        method: GET
+        description: List Accounts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: bills
+      path: /bills
+      operations:
+      - name: listbills
+        method: GET
+        description: List Bills
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createbill
+        method: POST
+        description: Create Bill
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: expenses
+      path: /expenses
+      operations:
+      - name: listexpenses
+        method: GET
+        description: List Expenses
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: invoices
+      path: /invoices
+      operations:
+      - name: listinvoices
+        method: GET
+        description: List Invoices
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createinvoice
+        method: POST
+        description: Create Invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Idempotency-Key
+          in: header
+          type: string
+          description: Unique key to ensure idempotent request
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: invoices-invoiceId
+      path: /invoices/{invoiceId}
+      operations:
+      - name: getinvoice
+        method: GET
+        description: Get Invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: invoiceId
+          in: path
+          type: string
+          required: true
+    - name: transactions
+      path: /transactions
+      operations:
+      - name: listtransactions
+        method: GET
+        description: List Transactions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: updated_at_min
+          in: query
+          type: string
+          description: Filter transactions updated after this timestamp
+    authentication:
+      type: basic
+      username: '{{env.RUTTER_USER}}'
+      password: '{{env.RUTTER_PASS}}'
+  exposes:
+  - type: rest
+    namespace: unified-accounting-rest
+    port: 8080
+    description: REST adapter for Rutter Unified API — Accounting. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/accounts
+      name: accounts
+      description: REST surface for accounts.
+      operations:
+      - method: GET
+        name: listaccounts
+        description: List Accounts
+        call: unified-accounting.listaccounts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bills
+      name: bills
+      description: REST surface for bills.
+      operations:
+      - method: GET
+        name: listbills
+        description: List Bills
+        call: unified-accounting.listbills
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbill
+        description: Create Bill
+        call: unified-accounting.createbill
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/expenses
+      name: expenses
+      description: REST surface for expenses.
+      operations:
+      - method: GET
+        name: listexpenses
+        description: List Expenses
+        call: unified-accounting.listexpenses
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices
+      name: invoices
+      description: REST surface for invoices.
+      operations:
+      - method: GET
+        name: listinvoices
+        description: List Invoices
+        call: unified-accounting.listinvoices
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createinvoice
+        description: Create Invoice
+        call: unified-accounting.createinvoice
+        with:
+          Idempotency-Key: rest.Idempotency-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices/{invoiceid}
+      name: invoices-invoiceid
+      description: REST surface for invoices-invoiceId.
+      operations:
+      - method: GET
+        name: getinvoice
+        description: Get Invoice
+        call: unified-accounting.getinvoice
+        with:
+          invoiceId: rest.invoiceId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/transactions
+      name: transactions
+      description: REST surface for transactions.
+      operations:
+      - method: GET
+        name: listtransactions
+        description: List Transactions
+        call: unified-accounting.listtransactions
+        with:
+          updated_at_min: rest.updated_at_min
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-accounting-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rutter Unified API — Accounting. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-accounts
+      description: List Accounts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-accounting.listaccounts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bills
+      description: List Bills
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-accounting.listbills
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-bill
+      description: Create Bill
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-accounting.createbill
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-expenses
+      description: List Expenses
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-accounting.listexpenses
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-invoices
+      description: List Invoices
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-accounting.listinvoices
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-invoice
+      description: Create Invoice
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-accounting.createinvoice
+      with:
+        Idempotency-Key: tools.Idempotency-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-invoice
+      description: Get Invoice
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-accounting.getinvoice
+      with:
+        invoiceId: tools.invoiceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-transactions
+      description: List Transactions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-accounting.listtransactions
+      with:
+        updated_at_min: tools.updated_at_min
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,71 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rutter Unified API — Banking
+  description: 'Rutter Unified API — Banking. 1 operations. Lead operation: List Bank Accounts. Self-contained Naftiko capability
+    covering one Rutter business surface.'
+  tags:
+  - Rutter
+  - Banking
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    RUTTER_API_KEY: RUTTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-banking
+    baseUri: https://production.rutterapi.com/versioned
+    description: Rutter Unified API — Banking business capability. Self-contained, no shared references.
+    resources:
+    - name: bank-accounts
+      path: /bank-accounts
+      operations:
+      - name: listbankaccounts
+        method: GET
+        description: List Bank Accounts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.RUTTER_USER}}'
+      password: '{{env.RUTTER_PASS}}'
+  exposes:
+  - type: rest
+    namespace: unified-banking-rest
+    port: 8080
+    description: REST adapter for Rutter Unified API — Banking. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/bank-accounts
+      name: bank-accounts
+      description: REST surface for bank-accounts.
+      operations:
+      - method: GET
+        name: listbankaccounts
+        description: List Bank Accounts
+        call: unified-banking.listbankaccounts
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-banking-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rutter Unified API — Banking. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-bank-accounts
+      description: List Bank Accounts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-banking.listbankaccounts
+      outputParameters:
+      - type: object
+        mapping: $.
