@@ -130,6 +130,8 @@ common:
   url: https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-invoice-schema.json
 - type: JSONSchema
   url: https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-order-schema.json
+- type: LLMsTxt
+  url: https://dashboard.rutterapi.com/llms.txt
 integrations:
 - name: Alibaba Commerce
 - name: Amazon Commerce
