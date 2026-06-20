@@ -7,7 +7,7 @@ description: >-
   and idempotency guarantees for financial data. The API supports OAuth2 and Basic authentication, versioning via the
   X-Rutter-Version header, cursor-based pagination, and asynchronous request processing.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Accounting
   - B2B
