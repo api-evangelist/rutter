@@ -101,11 +101,11 @@ common:
     url: https://www.rutter.com/integrations
   - type: APIs
     url: https://www.rutter.com/our-features/apis
-  - type: SignUp
+  - type: Signup
     url: https://dashboard.rutterapi.com/sign-up
   - type: GitHub
     url: https://github.com/rutter
-  - type: SDK
+  - type: SDKs
     url: https://github.com/rutter/react-rutter-link
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/vocabulary/rutter-vocabulary.yml
@@ -119,7 +119,7 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-invoice-schema.json
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-order-schema.json
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://dashboard.rutterapi.com/llms.txt
 integrations:
   - name: Alibaba Commerce
