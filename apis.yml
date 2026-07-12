@@ -87,6 +87,10 @@ apis:
       - type: ProductPage
         url: https://www.rutter.com/product/payments-api
 common:
+  - type: DomainSecurity
+    url: security/rutter-domain-security.yml
+  - type: Authentication
+    url: authentication/rutter-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/rutterapi
   - type: Website
