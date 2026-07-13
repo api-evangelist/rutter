@@ -1,10 +1,28 @@
-extends: spectral:oas
+# rutter — Spectral ruleset (strengthened)
+# Plain Spectral. Existing hand-authored rules preserved; measured rules added
+# from this provider's own OpenAPI conventions by strengthen_ruleset.py,
+# then self-validated against the spec.
+#
+# Provenance:
+#   - servers-https-only: 100% of servers already https (error)
+#   - servers-expected-domain: 2/2 servers on rutterapi.com
+#   - path-params-casing: camel @ 100% (n=8)
+#   - query-params-casing: snake @ 100% (n=34)
+#   - operationid-casing: camel @ 100% (n=26)
+#   - schema-names-casing: pascal @ 100% (n=22)
+#   - schema-properties-casing: snake @ 100% (n=115)
+#   - security: global (root) — NOT emitting operation-security-required
+#   - pagination params observed: ['cursor']
+#   - merge: kept 8 existing, added 7 measured, upgraded 0
+#   - added: servers-https-only, servers-expected-domain, path-params-casing, query-params-casing, schema-names-casing, schema-properties-casing, no-empty-descriptions
+extends:
+  - spectral:oas
 rules:
   rutter-version-header-required:
     description: All Rutter API requests must include the X-Rutter-Version header
-    message: "Operation '{{description}}' should document the X-Rutter-Version header parameter"
+    message: Operation '{{description}}' should document the X-Rutter-Version header parameter
     severity: warn
-    given: "$.paths[*][get,post,put,patch,delete]"
+    given: $.paths[*][get,post,put,patch,delete]
     then:
       field: parameters
       function: schema
@@ -18,74 +36,127 @@ rules:
                 const: X-Rutter-Version
               in:
                 const: header
-
   rutter-access-token-required:
     description: Most Rutter API operations require an access_token query parameter
-    message: "Operation '{{description}}' that reads platform data should have access_token parameter"
+    message: Operation '{{description}}' that reads platform data should have access_token parameter
     severity: warn
-    given: "$.paths[*][get]"
+    given: $.paths[*][get]
     then:
       field: parameters
       function: truthy
-
   rutter-operation-id-camel-case:
     description: All Rutter operationIds should use camelCase
-    message: "OperationId '{{value}}' should use camelCase naming"
+    message: OperationId '{{value}}' should use camelCase naming
     severity: warn
-    given: "$.paths[*][*].operationId"
+    given: $.paths[*][*].operationId
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-zA-Z0-9]*$"
-
+        match: ^[a-z][a-zA-Z0-9]*$
   rutter-tags-title-case:
     description: All tags must use Title Case
-    message: "Tag '{{value}}' should use Title Case"
+    message: Tag '{{value}}' should use Title Case
     severity: warn
-    given: "$.paths[*][*].tags[*]"
+    given: $.paths[*][*].tags[*]
     then:
       function: pattern
       functionOptions:
-        match: "^[A-Z][a-zA-Z0-9 &-]*$"
-
+        match: ^[A-Z][a-zA-Z0-9 &-]*$
   rutter-response-200-required:
     description: All operations must have a 200 success response
-    message: "Operation '{{description}}' is missing a 200 success response"
+    message: Operation '{{description}}' is missing a 200 success response
     severity: error
-    given: "$.paths[*][get,post,put,patch,delete].responses"
+    given: $.paths[*][get,post,put,patch,delete].responses
     then:
       function: schema
       functionOptions:
         schema:
           type: object
           anyOf:
-            - required: ["200"]
-            - required: ["201"]
-            - required: ["204"]
-
+          - required:
+            - '200'
+          - required:
+            - '201'
+          - required:
+            - '204'
   rutter-pagination-cursor:
     description: List operations should support cursor-based pagination
-    message: "List operation '{{description}}' should support cursor pagination"
+    message: List operation '{{description}}' should support cursor pagination
     severity: info
-    given: "$.paths[*].get"
+    given: $.paths[*].get
     then:
       field: parameters
       function: truthy
-
   rutter-idempotency-key-on-writes:
     description: POST operations that create resources should document Idempotency-Key header
-    message: "Create operation '{{description}}' should document the Idempotency-Key header"
+    message: Create operation '{{description}}' should document the Idempotency-Key header
     severity: info
-    given: "$.paths[*].post"
+    given: $.paths[*].post
     then:
       field: requestBody
       function: truthy
-
   rutter-basic-auth-documented:
     description: The API must document Basic auth security scheme
-    message: "API must define basicAuth security scheme"
+    message: API must define basicAuth security scheme
     severity: error
-    given: "$.components.securitySchemes"
+    given: $.components.securitySchemes
     then:
       field: basicAuth
+      function: truthy
+  servers-https-only:
+    description: Server URLs must use HTTPS.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^https://
+  servers-expected-domain:
+    description: Server URLs should be on the rutterapi.com domain.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: rutterapi\.com
+  path-params-casing:
+    description: Path parameters should be camelCase (the dominant convention in this API).
+    severity: warn
+    given: $.paths[*].parameters[?(@.in=='path')].name
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+  query-params-casing:
+    description: Query parameters should be snake_case (the dominant convention in this API).
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].parameters[?(@.in=='query')]
+    then:
+      field: name
+      function: casing
+      functionOptions:
+        type: snake
+  schema-names-casing:
+    description: Component schema names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+  schema-properties-casing:
+    description: Schema properties should be snake_case (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas[*].properties
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: snake
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings.
+    severity: warn
+    given: $..description
+    then:
       function: truthy
