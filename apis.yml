@@ -87,6 +87,8 @@ apis:
       - type: ProductPage
         url: https://www.rutter.com/product/payments-api
 common:
+  - type: AgenticAccess
+    url: agentic-access/rutter-agentic-access.yml
   - type: DomainSecurity
     url: security/rutter-domain-security.yml
   - type: Authentication
