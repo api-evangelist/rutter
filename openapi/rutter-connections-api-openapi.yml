@@ -1,0 +1,142 @@
+openapi: 3.1.0
+info:
+  title: Rutter Unified Accounting Connections API
+  description: The Rutter Unified API provides a single RESTful interface connecting to over 60 commerce, payments, and accounting platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses), commerce data (orders, products, customers, stores), payments data, ads data, and banking data. All requests require Basic authentication using client_id and client_secret, plus an access_token query parameter to identify the specific connection.
+  version: '2024-08-31'
+  contact:
+    name: Rutter Developer Documentation
+    url: https://docs.rutter.com/
+servers:
+- url: https://production.rutterapi.com/versioned
+  description: Production
+- url: https://sandbox.rutterapi.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Connections
+  description: Manage platform connections and authentication
+paths:
+  /connections:
+    get:
+      operationId: listConnections
+      summary: List Connections
+      description: Retrieve all connections for the authenticated client.
+      tags:
+      - Connections
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Connection'
+                  next_cursor:
+                    type: string
+        '401':
+          description: Unauthorized
+  /connections/{connectionId}:
+    get:
+      operationId: getConnection
+      summary: Get Connection
+      description: Retrieve details for a specific platform connection.
+      tags:
+      - Connections
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '404':
+          description: Connection not found
+  /connections/token_exchange:
+    post:
+      operationId: exchangeToken
+      summary: Exchange Token
+      description: Exchange a Rutter Link public token for a permanent access token for the connected platform.
+      tags:
+      - Connections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - public_token
+              properties:
+                public_token:
+                  type: string
+                  description: The public token obtained from Rutter Link
+      responses:
+        '200':
+          description: Access token returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+components:
+  parameters:
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
+    XRutterVersion:
+      name: X-Rutter-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '2024-08-31'
+      description: API version identifier
+  schemas:
+    Connection:
+      type: object
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          description: The connected platform (e.g., quickbooks, shopify, amazon)
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - error
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Use client_id as username and client_secret as password. Encode as base64(client_id:client_secret).
+externalDocs:
+  description: Rutter API Documentation
+  url: https://docs.rutter.com/

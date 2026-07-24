@@ -1,0 +1,416 @@
+openapi: 3.1.0
+info:
+  title: Rutter Unified Accounting API
+  description: The Rutter Unified API provides a single RESTful interface connecting to over 60 commerce, payments, and accounting platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses), commerce data (orders, products, customers, stores), payments data, ads data, and banking data. All requests require Basic authentication using client_id and client_secret, plus an access_token query parameter to identify the specific connection.
+  version: '2024-08-31'
+  contact:
+    name: Rutter Developer Documentation
+    url: https://docs.rutter.com/
+servers:
+- url: https://production.rutterapi.com/versioned
+  description: Production
+- url: https://sandbox.rutterapi.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Accounting
+  description: Accounting data across platforms
+paths:
+  /accounts:
+    get:
+      operationId: listAccounts
+      summary: List Accounts
+      description: Retrieve a list of chart of accounts entries from the connected accounting platform.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+                  next_cursor:
+                    type: string
+        '401':
+          description: Unauthorized
+  /transactions:
+    get:
+      operationId: listTransactions
+      summary: List Transactions
+      description: Retrieve a list of financial transactions from the connected platform.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      - $ref: '#/components/parameters/Cursor'
+      - name: updated_at_min
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Filter transactions updated after this timestamp
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+                  next_cursor:
+                    type: string
+  /invoices:
+    get:
+      operationId: listInvoices
+      summary: List Invoices
+      description: Retrieve a list of invoices from the connected accounting platform.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  invoices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Invoice'
+                  next_cursor:
+                    type: string
+    post:
+      operationId: createInvoice
+      summary: Create Invoice
+      description: Create a new invoice in the connected accounting platform.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      - name: Idempotency-Key
+        in: header
+        schema:
+          type: string
+        description: Unique key to ensure idempotent request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceCreate'
+      responses:
+        '200':
+          description: Invoice created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+  /invoices/{invoiceId}:
+    get:
+      operationId: getInvoice
+      summary: Get Invoice
+      description: Retrieve a specific invoice by ID.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      - name: invoiceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '404':
+          description: Invoice not found
+  /bills:
+    get:
+      operationId: listBills
+      summary: List Bills
+      description: Retrieve a list of bills (vendor invoices) from the connected accounting platform.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bills:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bill'
+                  next_cursor:
+                    type: string
+    post:
+      operationId: createBill
+      summary: Create Bill
+      description: Create a new bill in the connected accounting platform.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillCreate'
+      responses:
+        '200':
+          description: Bill created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+  /expenses:
+    get:
+      operationId: listExpenses
+      summary: List Expenses
+      description: Retrieve a list of expense records from the connected accounting platform.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/XRutterVersion'
+      - $ref: '#/components/parameters/AccessToken'
+      - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  expenses:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Expense'
+                  next_cursor:
+                    type: string
+components:
+  schemas:
+    LineItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: number
+        unit_price:
+          type: number
+          format: double
+        total_amount:
+          type: number
+          format: double
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: string
+        customer_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - draft
+          - open
+          - paid
+          - voided
+        amount_due:
+          type: number
+          format: double
+        currency:
+          type: string
+        due_date:
+          type: string
+          format: date
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    InvoiceCreate:
+      type: object
+      required:
+      - customer_id
+      - line_items
+      properties:
+        customer_id:
+          type: string
+        currency:
+          type: string
+        due_date:
+          type: string
+          format: date
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        date:
+          type: string
+          format: date
+        description:
+          type: string
+        type:
+          type: string
+        account_id:
+          type: string
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - asset
+          - liability
+          - equity
+          - revenue
+          - expense
+        currency:
+          type: string
+        balance:
+          type: number
+          format: double
+        platform_id:
+          type: string
+    Bill:
+      type: object
+      properties:
+        id:
+          type: string
+        vendor_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - draft
+          - open
+          - paid
+          - voided
+        amount_due:
+          type: number
+          format: double
+        currency:
+          type: string
+        due_date:
+          type: string
+          format: date
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Expense:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        date:
+          type: string
+          format: date
+        description:
+          type: string
+        category:
+          type: string
+        account_id:
+          type: string
+    BillCreate:
+      type: object
+      required:
+      - vendor_id
+      - line_items
+      properties:
+        vendor_id:
+          type: string
+        currency:
+          type: string
+        due_date:
+          type: string
+          format: date
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+  parameters:
+    XRutterVersion:
+      name: X-Rutter-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '2024-08-31'
+      description: API version identifier
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
+    AccessToken:
+      name: access_token
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Unique access token identifying the specific connection
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Use client_id as username and client_secret as password. Encode as base64(client_id:client_secret).
+externalDocs:
+  description: Rutter API Documentation
+  url: https://docs.rutter.com/
