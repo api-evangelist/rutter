@@ -7,7 +7,20 @@ description: >-
   and idempotency guarantees for financial data. The API supports OAuth2 and Basic authentication, versioning via the
   X-Rutter-Version header, cursor-based pagination, and asynchronous request processing.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/rutter.png
 tags:
   - Accounting
   - B2B
@@ -20,72 +33,123 @@ created: '2026-03-16'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: rutter:unified-api
-    name: Rutter Unified API
-    description: >-
-      The Rutter Unified API provides a single RESTful interface to over 60 commerce, payments, and accounting
-      platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses),
-      commerce data (orders, products, customers), payments data, ads data, and banking data through a versioned API
-      with cursor pagination and idempotent writes.
-    humanURL: https://docs.rutter.com/
-    baseURL: https://production.rutterapi.com/versioned
-    tags:
-      - Accounting
-      - B2B
-      - Commerce
-      - Financial Data
-      - Payments
-      - Unified API
-    properties:
-      - type: Documentation
-        url: https://docs.rutter.com/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/openapi/rutter-unified-api-openapi.yml
-  - aid: rutter:commerce-api
-    name: Rutter Commerce API
-    description: >-
-      The Rutter Commerce API enables reading and writing data to all major commerce platforms through a unified API,
-      supporting platforms like Shopify, WooCommerce, Amazon, and more.
-    humanURL: https://www.rutter.com/product/commerce-api
-    tags:
-      - Commerce
-      - E-Commerce
-      - Unified API
-    properties:
-      - type: Documentation
-        url: https://docs.rutter.com/
-      - type: ProductPage
-        url: https://www.rutter.com/product/commerce-api
-  - aid: rutter:accounting-api
-    name: Rutter Accounting API
-    description: >-
-      The Rutter Accounting API provides a unified interface to read and write data to all major accounting platforms
-      including QuickBooks, Xero, Freshbooks, and Zoho Books.
-    humanURL: https://www.rutter.com/product/accounting-api
-    tags:
-      - Accounting
-      - Financial Data
-      - Unified API
-    properties:
-      - type: Documentation
-        url: https://docs.rutter.com/
-      - type: ProductPage
-        url: https://www.rutter.com/product/accounting-api
-  - aid: rutter:payments-api
-    name: Rutter Payments API
-    description: >-
-      The Rutter Payments API provides a unified interface to read and write data to all major payment platforms through
-      a single REST API.
-    humanURL: https://www.rutter.com/product/payments-api
-    tags:
-      - Financial Data
-      - Payments
-      - Unified API
-    properties:
-      - type: Documentation
-        url: https://docs.rutter.com/
-      - type: ProductPage
-        url: https://www.rutter.com/product/payments-api
+- aid: rutter:commerce-api
+  name: Rutter Commerce API
+  description: >-
+    The Rutter Commerce API enables reading and writing data to all major commerce platforms through a
+    unified API, supporting platforms like Shopify, WooCommerce, Amazon, and more.
+  humanURL: https://www.rutter.com/product/commerce-api
+  tags:
+  - Commerce
+  - E-Commerce
+  - Unified API
+  properties:
+  - type: Documentation
+    url: https://docs.rutter.com/
+  - type: ProductPage
+    url: https://www.rutter.com/product/commerce-api
+- aid: rutter:accounting-api
+  name: Rutter Accounting API
+  description: >-
+    The Rutter Accounting API provides a unified interface to read and write data to all major accounting
+    platforms including QuickBooks, Xero, Freshbooks, and Zoho Books.
+  humanURL: https://www.rutter.com/product/accounting-api
+  tags:
+  - Accounting
+  - Financial Data
+  - Unified API
+  properties:
+  - type: Documentation
+    url: https://docs.rutter.com/
+  - type: ProductPage
+    url: https://www.rutter.com/product/accounting-api
+- aid: rutter:payments-api
+  name: Rutter Payments API
+  description: >-
+    The Rutter Payments API provides a unified interface to read and write data to all major payment platforms
+    through a single REST API.
+  humanURL: https://www.rutter.com/product/payments-api
+  tags:
+  - Financial Data
+  - Payments
+  - Unified API
+  properties:
+  - type: Documentation
+    url: https://docs.rutter.com/
+  - type: ProductPage
+    url: https://www.rutter.com/product/payments-api
+- aid: rutter:rutter-accounting-api
+  name: Rutter Accounting API
+  description: Accounting data across platforms
+  humanURL: https://docs.rutter.com/
+  baseURL: https://production.rutterapi.com/versioned
+  tags:
+  - Accounting
+  properties:
+  - type: OpenAPI
+    url: openapi/rutter-accounting-api-openapi.yml
+  - type: Documentation
+    url: https://docs.rutter.com/
+- aid: rutter:rutter-ads-api
+  name: Rutter Ads API
+  description: Advertising platform data
+  humanURL: https://docs.rutter.com/
+  baseURL: https://production.rutterapi.com/versioned
+  tags:
+  - Ads
+  properties:
+  - type: OpenAPI
+    url: openapi/rutter-ads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.rutter.com/
+- aid: rutter:rutter-banking-api
+  name: Rutter Banking API
+  description: Banking and financial account data
+  humanURL: https://docs.rutter.com/
+  baseURL: https://production.rutterapi.com/versioned
+  tags:
+  - Banking
+  properties:
+  - type: OpenAPI
+    url: openapi/rutter-banking-api-openapi.yml
+  - type: Documentation
+    url: https://docs.rutter.com/
+- aid: rutter:rutter-commerce-api
+  name: Rutter Commerce API
+  description: Commerce and e-commerce data
+  humanURL: https://docs.rutter.com/
+  baseURL: https://production.rutterapi.com/versioned
+  tags:
+  - Commerce
+  properties:
+  - type: OpenAPI
+    url: openapi/rutter-commerce-api-openapi.yml
+  - type: Documentation
+    url: https://docs.rutter.com/
+- aid: rutter:rutter-connections-api
+  name: Rutter Connections API
+  description: Manage platform connections and authentication
+  humanURL: https://docs.rutter.com/
+  baseURL: https://production.rutterapi.com/versioned
+  tags:
+  - Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/rutter-connections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.rutter.com/
+- aid: rutter:rutter-webhooks-api
+  name: Rutter Webhooks API
+  description: Webhook configuration and management
+  humanURL: https://docs.rutter.com/
+  baseURL: https://production.rutterapi.com/versioned
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/rutter-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.rutter.com/
 common:
   - type: AgenticAccess
     url: agentic-access/rutter-agentic-access.yml
