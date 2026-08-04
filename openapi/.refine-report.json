@@ -1,0 +1,24 @@
+{
+  "provider": "rutter",
+  "sources": [
+    "rutter-accounting-api-openapi.yml",
+    "rutter-ads-api-openapi.yml",
+    "rutter-banking-api-openapi.yml",
+    "rutter-commerce-api-openapi.yml",
+    "rutter-connections-api-openapi.yml",
+    "rutter-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "rutter-accounting-api-openapi.yml",
+    "rutter-ads-api-openapi.yml",
+    "rutter-banking-api-openapi.yml",
+    "rutter-commerce-api-openapi.yml",
+    "rutter-connections-api-openapi.yml",
+    "rutter-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
