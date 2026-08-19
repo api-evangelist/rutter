@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rutter Unified Accounting Webhooks API",
+    "version": "2024-08-31"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/config-webhooks",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve all configured webhooks for the authenticated client."
+        },
+        {
+          "info": {
+            "name": "Create Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.rutterapi.com/versioned/config-webhooks",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure a new webhook endpoint to receive event notifications."
+        },
+        {
+          "info": {
+            "name": "Delete Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://production.rutterapi.com/versioned/config-webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove a webhook configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

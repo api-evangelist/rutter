@@ -1,0 +1,460 @@
+{
+  "item": [
+    {
+      "id": "a8dbd0a2-8b40-4514-8c69-23e53bd42b17",
+      "name": "Connections",
+      "description": {
+        "content": "Manage platform connections and authentication",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1d27073-1360-4749-897c-660b7477dcea",
+          "name": "List Connections",
+          "request": {
+            "name": "List Connections",
+            "description": {
+              "content": "Retrieve all connections for the authenticated client.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response next_cursor field"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "45180db7-017b-4c84-9ace-fde374b8507b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connections\": [\n    {\n      \"id\": \"string\",\n      \"platform\": \"string\",\n      \"status\": \"active\",\n      \"created_at\": \"1991-12-21T15:51:11.037Z\",\n      \"updated_at\": \"1957-04-18T12:01:53.336Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"platform\": \"string\",\n      \"status\": \"error\",\n      \"created_at\": \"1952-08-09T05:24:00.582Z\",\n      \"updated_at\": \"1981-10-09T09:13:45.769Z\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c93f1c08-81fe-4a3a-a647-7f5ba7ac19db",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92795181-b4f3-46eb-9f32-659075fb5a65",
+          "name": "Get Connection",
+          "request": {
+            "name": "Get Connection",
+            "description": {
+              "content": "Retrieve details for a specific platform connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connections",
+                ":connectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f6762f1-1b06-4ab2-979b-7c0f2dae324e",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connections",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"platform\": \"string\",\n  \"status\": \"inactive\",\n  \"created_at\": \"1953-09-25T20:29:45.922Z\",\n  \"updated_at\": \"1975-05-21T09:33:13.433Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aada553a-ee1c-4dc1-8927-80eac777a366",
+              "name": "Connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connections",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2dc9600a-dd3d-495e-8a9f-a28673d8ae73",
+          "name": "Exchange Token",
+          "request": {
+            "name": "Exchange Token",
+            "description": {
+              "content": "Exchange a Rutter Link public token for a permanent access token for the connected platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connections",
+                "token_exchange"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"public_token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e921a840-e060-4b36-91dd-f5b54c2cab88",
+              "name": "Access token returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connections",
+                    "token_exchange"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production.rutterapi.com/versioned",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d722eea7-c03e-4279-9a93-38912c381546",
+    "name": "Rutter Unified Accounting Connections API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Rutter Unified API provides a single RESTful interface connecting to over 60 commerce, payments, and accounting platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses), commerce data (orders, products, customers, stores), payments data, ads data, and banking data. All requests require Basic authentication using client_id and client_secret, plus an access_token query parameter to identify the specific connection.\n\nContact Support:\n Name: Rutter Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

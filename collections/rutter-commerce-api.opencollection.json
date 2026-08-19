@@ -1,0 +1,345 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rutter Unified Accounting Commerce API",
+    "version": "2024-08-31"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commerce",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/orders",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand response with additional platform-specific data"
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of orders from the connected commerce platform. Supports expansions to include additional data."
+        },
+        {
+          "info": {
+            "name": "Create Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.rutterapi.com/versioned/orders",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new order in the connected commerce platform."
+        },
+        {
+          "info": {
+            "name": "Get Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/orders/:orderId",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific order by ID."
+        },
+        {
+          "info": {
+            "name": "Fulfill Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.rutterapi.com/versioned/orders/:orderId/fulfillments",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mark an order as fulfilled and provide fulfillment details."
+        },
+        {
+          "info": {
+            "name": "List Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/products",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of products from the connected commerce platform."
+        },
+        {
+          "info": {
+            "name": "Create Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.rutterapi.com/versioned/products",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new product in the connected commerce platform."
+        },
+        {
+          "info": {
+            "name": "Get Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/products/:productId",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific product by ID."
+        },
+        {
+          "info": {
+            "name": "Update Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://production.rutterapi.com/versioned/products/:productId",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing product in the connected commerce platform."
+        },
+        {
+          "info": {
+            "name": "List Customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/customers",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of customers from the connected commerce or accounting platform."
+        },
+        {
+          "info": {
+            "name": "Get Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/customers/:customerId",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a specific customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

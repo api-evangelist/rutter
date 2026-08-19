@@ -1,0 +1,278 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rutter Unified Accounting API",
+    "version": "2024-08-31"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/accounts",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of chart of accounts entries from the connected accounting platform."
+        },
+        {
+          "info": {
+            "name": "List Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/transactions",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions updated after this timestamp"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of financial transactions from the connected platform."
+        },
+        {
+          "info": {
+            "name": "List Invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/invoices",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of invoices from the connected accounting platform."
+        },
+        {
+          "info": {
+            "name": "Create Invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.rutterapi.com/versioned/invoices",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new invoice in the connected accounting platform."
+        },
+        {
+          "info": {
+            "name": "Get Invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/invoices/:invoiceId",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific invoice by ID."
+        },
+        {
+          "info": {
+            "name": "List Bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/bills",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of bills (vendor invoices) from the connected accounting platform."
+        },
+        {
+          "info": {
+            "name": "Create Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.rutterapi.com/versioned/bills",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new bill in the connected accounting platform."
+        },
+        {
+          "info": {
+            "name": "List Expenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/expenses",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of expense records from the connected accounting platform."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

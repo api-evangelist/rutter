@@ -1,0 +1,1106 @@
+{
+  "item": [
+    {
+      "id": "160d5b7a-0840-49f2-97f7-a8a7eda8997c",
+      "name": "Accounting",
+      "description": {
+        "content": "Accounting data across platforms",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58709423-7b5f-48cf-acca-85126c186607",
+          "name": "List Accounts",
+          "request": {
+            "name": "List Accounts",
+            "description": {
+              "content": "Retrieve a list of chart of accounts entries from the connected accounting platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response next_cursor field"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92bc591d-a13e-465c-8c88-40301de0130d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accounts\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"liability\",\n      \"currency\": \"string\",\n      \"balance\": 6669.324319684092,\n      \"platform_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"revenue\",\n      \"currency\": \"string\",\n      \"balance\": 9224.894957370596,\n      \"platform_id\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9271ad19-e254-418f-91e5-93b5074fdd75",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b89a388-6c64-4f9f-8e9e-1cdbd6d4c460",
+          "name": "List Transactions",
+          "request": {
+            "name": "List Transactions",
+            "description": {
+              "content": "Retrieve a list of financial transactions from the connected platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response next_cursor field"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_min",
+                  "value": "<dateTime>",
+                  "description": "Filter transactions updated after this timestamp"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0183e6a2-69de-4d23-82d3-18e5cba44caa",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactions\": [\n    {\n      \"id\": \"string\",\n      \"amount\": 7592.737303603513,\n      \"currency\": \"string\",\n      \"date\": \"1986-10-27\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"account_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"amount\": 4993.053697631076,\n      \"currency\": \"string\",\n      \"date\": \"1953-03-05\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"account_id\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc7f0c39-3b67-415d-be3f-82eaf4625704",
+          "name": "List Invoices",
+          "request": {
+            "name": "List Invoices",
+            "description": {
+              "content": "Retrieve a list of invoices from the connected accounting platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response next_cursor field"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e20b9436-6e42-4944-bee0-ed2fb4dc4a12",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"invoices\": [\n    {\n      \"id\": \"string\",\n      \"customer_id\": \"string\",\n      \"status\": \"draft\",\n      \"amount_due\": 5511.4231774085265,\n      \"currency\": \"string\",\n      \"due_date\": \"1980-02-21\",\n      \"line_items\": [\n        {\n          \"description\": \"string\",\n          \"quantity\": 4761.581423910306,\n          \"unit_price\": 3316.25112867358,\n          \"total_amount\": 4910.254769067228\n        },\n        {\n          \"description\": \"string\",\n          \"quantity\": 7151.761931433649,\n          \"unit_price\": 1689.2881373324908,\n          \"total_amount\": 9326.079361196658\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"customer_id\": \"string\",\n      \"status\": \"draft\",\n      \"amount_due\": 1127.9841826565162,\n      \"currency\": \"string\",\n      \"due_date\": \"1956-07-07\",\n      \"line_items\": [\n        {\n          \"description\": \"string\",\n          \"quantity\": 7233.711614154981,\n          \"unit_price\": 859.5499517227468,\n          \"total_amount\": 4845.840231812936\n        },\n        {\n          \"description\": \"string\",\n          \"quantity\": 6608.8442004083445,\n          \"unit_price\": 3034.1046185355767,\n          \"total_amount\": 9453.29876265267\n        }\n      ]\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dec42a35-9159-4794-ac67-50c8c726d147",
+          "name": "Create Invoice",
+          "request": {
+            "name": "Create Invoice",
+            "description": {
+              "content": "Create a new invoice in the connected accounting platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Unique key to ensure idempotent request",
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": \"<string>\",\n  \"line_items\": [\n    {\n      \"description\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unit_price\": \"<double>\",\n      \"total_amount\": \"<double>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unit_price\": \"<double>\",\n      \"total_amount\": \"<double>\"\n    }\n  ],\n  \"currency\": \"<string>\",\n  \"due_date\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35c63229-7038-45ae-96e2-c50ebeb5a79c",
+              "name": "Invoice created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent request",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"line_items\": [\n    {\n      \"description\": \"string\",\n      \"quantity\": 4461.1485591458595,\n      \"unit_price\": 6453.958847675344,\n      \"total_amount\": 7168.249803114216\n    },\n    {\n      \"description\": \"string\",\n      \"quantity\": 6438.0103860243,\n      \"unit_price\": 7324.399185094745,\n      \"total_amount\": 9500.416173698723\n    }\n  ],\n  \"currency\": \"<string>\",\n  \"due_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"customer_id\": \"string\",\n  \"status\": \"open\",\n  \"amount_due\": 2498.744362951051,\n  \"currency\": \"string\",\n  \"due_date\": \"1971-11-15\",\n  \"line_items\": [\n    {\n      \"description\": \"string\",\n      \"quantity\": 1262.2868809109812,\n      \"unit_price\": 6533.902693318206,\n      \"total_amount\": 6461.506617163817\n    },\n    {\n      \"description\": \"string\",\n      \"quantity\": 5335.7693789617515,\n      \"unit_price\": 7332.212473607937,\n      \"total_amount\": 6152.317316511386\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66d0f2f6-5d51-48be-9516-474d2921f046",
+          "name": "Get Invoice",
+          "request": {
+            "name": "Get Invoice",
+            "description": {
+              "content": "Retrieve a specific invoice by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invoices",
+                ":invoiceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "efe17975-4adb-4bd0-908d-b9f3a19444d5",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"customer_id\": \"string\",\n  \"status\": \"open\",\n  \"amount_due\": 2498.744362951051,\n  \"currency\": \"string\",\n  \"due_date\": \"1971-11-15\",\n  \"line_items\": [\n    {\n      \"description\": \"string\",\n      \"quantity\": 1262.2868809109812,\n      \"unit_price\": 6533.902693318206,\n      \"total_amount\": 6461.506617163817\n    },\n    {\n      \"description\": \"string\",\n      \"quantity\": 5335.7693789617515,\n      \"unit_price\": 7332.212473607937,\n      \"total_amount\": 6152.317316511386\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88e3dc8b-b491-479d-92ab-f118abe4ec72",
+              "name": "Invoice not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f1ad790-7ac8-493c-aa54-dc6348efbaa9",
+          "name": "List Bills",
+          "request": {
+            "name": "List Bills",
+            "description": {
+              "content": "Retrieve a list of bills (vendor invoices) from the connected accounting platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response next_cursor field"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0bc3002-0039-4e29-b4e1-c6f7381db408",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bills\": [\n    {\n      \"id\": \"string\",\n      \"vendor_id\": \"string\",\n      \"status\": \"open\",\n      \"amount_due\": 6193.854124561675,\n      \"currency\": \"string\",\n      \"due_date\": \"1989-04-01\",\n      \"line_items\": [\n        {\n          \"description\": \"string\",\n          \"quantity\": 8862.722534654138,\n          \"unit_price\": 43.33933992074157,\n          \"total_amount\": 8273.598032164493\n        },\n        {\n          \"description\": \"string\",\n          \"quantity\": 5669.89331901695,\n          \"unit_price\": 157.27171112578597,\n          \"total_amount\": 2289.3549100409173\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"vendor_id\": \"string\",\n      \"status\": \"voided\",\n      \"amount_due\": 3362.3402283877213,\n      \"currency\": \"string\",\n      \"due_date\": \"2001-07-04\",\n      \"line_items\": [\n        {\n          \"description\": \"string\",\n          \"quantity\": 6097.962033376732,\n          \"unit_price\": 3693.708953889292,\n          \"total_amount\": 1008.6062601767632\n        },\n        {\n          \"description\": \"string\",\n          \"quantity\": 7267.801298777214,\n          \"unit_price\": 8974.793989161613,\n          \"total_amount\": 1734.3349537075458\n        }\n      ]\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5c319de-632f-4aa8-8139-31e8f5033ad9",
+          "name": "Create Bill",
+          "request": {
+            "name": "Create Bill",
+            "description": {
+              "content": "Create a new bill in the connected accounting platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vendor_id\": \"<string>\",\n  \"line_items\": [\n    {\n      \"description\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unit_price\": \"<double>\",\n      \"total_amount\": \"<double>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unit_price\": \"<double>\",\n      \"total_amount\": \"<double>\"\n    }\n  ],\n  \"currency\": \"<string>\",\n  \"due_date\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2cf1d862-b670-44a1-b69d-014a5e97dfb5",
+              "name": "Bill created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vendor_id\": \"<string>\",\n  \"line_items\": [\n    {\n      \"description\": \"string\",\n      \"quantity\": 8403.925244543629,\n      \"unit_price\": 3609.118325752585,\n      \"total_amount\": 6558.977471185073\n    },\n    {\n      \"description\": \"string\",\n      \"quantity\": 8608.450781893705,\n      \"unit_price\": 4552.607431923885,\n      \"total_amount\": 7528.244057918997\n    }\n  ],\n  \"currency\": \"<string>\",\n  \"due_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"vendor_id\": \"string\",\n  \"status\": \"paid\",\n  \"amount_due\": 742.6804075555326,\n  \"currency\": \"string\",\n  \"due_date\": \"1983-09-25\",\n  \"line_items\": [\n    {\n      \"description\": \"string\",\n      \"quantity\": 7690.225511545722,\n      \"unit_price\": 9839.461807864014,\n      \"total_amount\": 4782.400583005782\n    },\n    {\n      \"description\": \"string\",\n      \"quantity\": 3341.934506442139,\n      \"unit_price\": 4225.024123927366,\n      \"total_amount\": 6383.383876988814\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9353e41c-c45c-4f39-a6ee-5aac95c7508c",
+          "name": "List Expenses",
+          "request": {
+            "name": "List Expenses",
+            "description": {
+              "content": "Retrieve a list of expense records from the connected accounting platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "expenses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response next_cursor field"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "221189f0-5e08-42e0-b114-395bbd51fa75",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "expenses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expenses\": [\n    {\n      \"id\": \"string\",\n      \"amount\": 2062.0644314895644,\n      \"currency\": \"string\",\n      \"date\": \"2015-03-22\",\n      \"description\": \"string\",\n      \"category\": \"string\",\n      \"account_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"amount\": 1719.4293347290236,\n      \"currency\": \"string\",\n      \"date\": \"1992-02-21\",\n      \"description\": \"string\",\n      \"category\": \"string\",\n      \"account_id\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production.rutterapi.com/versioned",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dfb1ecc8-ad99-4fac-b3b6-1d9a6c27652d",
+    "name": "Rutter Unified Accounting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Rutter Unified API provides a single RESTful interface connecting to over 60 commerce, payments, and accounting platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses), commerce data (orders, products, customers, stores), payments data, ads data, and banking data. All requests require Basic authentication using client_id and client_secret, plus an access_token query parameter to identify the specific connection.\n\nContact Support:\n Name: Rutter Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

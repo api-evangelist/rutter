@@ -1,0 +1,157 @@
+{
+  "item": [
+    {
+      "id": "4c465fdd-af26-41da-a561-ef306f03d493",
+      "name": "Ads",
+      "description": {
+        "content": "Advertising platform data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "568fe1dc-4b3a-4dac-a902-40719cce6a27",
+          "name": "List Ad Accounts",
+          "request": {
+            "name": "List Ad Accounts",
+            "description": {
+              "content": "Retrieve a list of advertising accounts from the connected ads platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ad-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Unique access token identifying the specific connection"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response next_cursor field"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version identifier",
+                "key": "X-Rutter-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08009929-c98c-4c07-89ae-ff663f37c4ca",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ad-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version identifier",
+                    "key": "X-Rutter-Version",
+                    "value": "2024-08-31"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ad_accounts\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"platform\": \"string\",\n      \"currency\": \"string\",\n      \"status\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"platform\": \"string\",\n      \"currency\": \"string\",\n      \"status\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production.rutterapi.com/versioned",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1163859c-3693-467b-ada0-3baad124a97e",
+    "name": "Rutter Unified Accounting Ads API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Rutter Unified API provides a single RESTful interface connecting to over 60 commerce, payments, and accounting platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses), commerce data (orders, products, customers, stores), payments data, ads data, and banking data. All requests require Basic authentication using client_id and client_secret, plus an access_token query parameter to identify the specific connection.\n\nContact Support:\n Name: Rutter Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

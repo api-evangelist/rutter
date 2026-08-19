@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rutter Unified Accounting Banking API",
+    "version": "2024-08-31"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Banking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bank Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/bank-accounts",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Unique access token identifying the specific connection"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of bank accounts from the connected banking platform."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

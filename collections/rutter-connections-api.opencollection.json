@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rutter Unified Accounting Connections API",
+    "version": "2024-08-31"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/connections",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response next_cursor field"
+              }
+            ]
+          },
+          "docs": "Retrieve all connections for the authenticated client."
+        },
+        {
+          "info": {
+            "name": "Get Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.rutterapi.com/versioned/connections/:connectionId",
+            "headers": [
+              {
+                "name": "X-Rutter-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a specific platform connection."
+        },
+        {
+          "info": {
+            "name": "Exchange Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.rutterapi.com/versioned/connections/token_exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange a Rutter Link public token for a permanent access token for the connected platform."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
