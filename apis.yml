@@ -7,6 +7,18 @@ description: >-
   and idempotency guarantees for financial data. The API supports OAuth2 and Basic authentication, versioning via the
   X-Rutter-Version header, cursor-based pagination, and asynchronous request processing.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
