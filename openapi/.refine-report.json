@@ -1,12 +1,7 @@
 {
   "provider": "rutter",
   "sources": [
-    "rutter-accounting-api-openapi.yml",
-    "rutter-ads-api-openapi.yml",
-    "rutter-banking-api-openapi.yml",
-    "rutter-commerce-api-openapi.yml",
-    "rutter-connections-api-openapi.yml",
-    "rutter-webhooks-api-openapi.yml"
+    "_original/rutter-unified-api-openapi.yml"
   ],
   "outputs": [
     "rutter-accounting-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "rutter-unified-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "rutter-accounting-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rutter-ads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rutter-banking-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rutter-commerce-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rutter-connections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rutter-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

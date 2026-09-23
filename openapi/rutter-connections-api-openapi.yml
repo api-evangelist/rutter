@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Rutter Unified Accounting Connections API
+  title: Rutter Unified Connections API
   description: The Rutter Unified API provides a single RESTful interface connecting to over 60 commerce, payments, and accounting platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses), commerce data (orders, products, customers, stores), payments data, ads data, and banking data. All requests require Basic authentication using client_id and client_secret, plus an access_token query parameter to identify the specific connection.
   version: '2024-08-31'
   contact:
@@ -97,12 +97,6 @@ paths:
                     type: string
 components:
   parameters:
-    Cursor:
-      name: cursor
-      in: query
-      schema:
-        type: string
-      description: Pagination cursor from previous response next_cursor field
     XRutterVersion:
       name: X-Rutter-Version
       in: header
@@ -111,6 +105,12 @@ components:
         type: string
         example: '2024-08-31'
       description: API version identifier
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
   schemas:
     Connection:
       type: object
