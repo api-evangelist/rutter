@@ -225,6 +225,41 @@ paths:
                     type: string
 components:
   schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - asset
+          - liability
+          - equity
+          - revenue
+          - expense
+        currency:
+          type: string
+        balance:
+          type: number
+          format: double
+        platform_id:
+          type: string
+    LineItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: number
+        unit_price:
+          type: number
+          format: double
+        total_amount:
+          type: number
+          format: double
     BillCreate:
       type: object
       required:
@@ -268,27 +303,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
-    Account:
+    Transaction:
       type: object
       properties:
         id:
           type: string
-        name:
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        date:
+          type: string
+          format: date
+        description:
           type: string
         type:
           type: string
-          enum:
-          - asset
-          - liability
-          - equity
-          - revenue
-          - expense
-        currency:
-          type: string
-        balance:
-          type: number
-          format: double
-        platform_id:
+        account_id:
           type: string
     Expense:
       type: object
@@ -309,19 +341,23 @@ components:
           type: string
         account_id:
           type: string
-    LineItem:
+    InvoiceCreate:
       type: object
+      required:
+      - customer_id
+      - line_items
       properties:
-        description:
+        customer_id:
           type: string
-        quantity:
-          type: number
-        unit_price:
-          type: number
-          format: double
-        total_amount:
-          type: number
-          format: double
+        currency:
+          type: string
+        due_date:
+          type: string
+          format: date
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
     Bill:
       type: object
       properties:
@@ -348,42 +384,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
-    Transaction:
-      type: object
-      properties:
-        id:
-          type: string
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-        date:
-          type: string
-          format: date
-        description:
-          type: string
-        type:
-          type: string
-        account_id:
-          type: string
-    InvoiceCreate:
-      type: object
-      required:
-      - customer_id
-      - line_items
-      properties:
-        customer_id:
-          type: string
-        currency:
-          type: string
-        due_date:
-          type: string
-          format: date
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
   parameters:
     XRutterVersion:
       name: X-Rutter-Version
@@ -393,12 +393,6 @@ components:
         type: string
         example: '2024-08-31'
       description: API version identifier
-    Cursor:
-      name: cursor
-      in: query
-      schema:
-        type: string
-      description: Pagination cursor from previous response next_cursor field
     AccessToken:
       name: access_token
       in: query
@@ -406,6 +400,12 @@ components:
       schema:
         type: string
       description: Unique access token identifying the specific connection
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
   securitySchemes:
     basicAuth:
       type: http

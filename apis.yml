@@ -40,7 +40,7 @@ tags:
   - Commerce
   - Financial Data
   - Payments
-  - Unified-API
+  - Unified API
 tags_raw:
   - Accounting
   - B2B
@@ -48,6 +48,7 @@ tags_raw:
   - Financial Data
   - Payments
   - Unified API
+  - Unified-API
 url: https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/apis.yml
 created: '2026-03-16'
 modified: '2026-05-19'
@@ -62,11 +63,12 @@ apis:
   tags:
   - Commerce
   - E-Commerce
-  - Unified-API
+  - Unified API
   tags_raw:
   - Commerce
   - E-Commerce
   - Unified API
+  - Unified-API
   properties:
   - type: Documentation
     url: https://docs.rutter.com/
@@ -81,11 +83,12 @@ apis:
   tags:
   - Accounting
   - Financial Data
-  - Unified-API
+  - Unified API
   tags_raw:
   - Accounting
   - Financial Data
   - Unified API
+  - Unified-API
   properties:
   - type: Documentation
     url: https://docs.rutter.com/
@@ -100,11 +103,12 @@ apis:
   tags:
   - Financial Data
   - Payments
-  - Unified-API
+  - Unified API
   tags_raw:
   - Financial Data
   - Payments
   - Unified API
+  - Unified-API
   properties:
   - type: Documentation
     url: https://docs.rutter.com/
