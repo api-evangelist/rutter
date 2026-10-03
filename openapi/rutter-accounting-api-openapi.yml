@@ -225,58 +225,25 @@ paths:
                     type: string
 components:
   schemas:
-    Account:
+    Expense:
       type: object
       properties:
         id:
           type: string
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-          - asset
-          - liability
-          - equity
-          - revenue
-          - expense
+        amount:
+          type: number
+          format: double
         currency:
           type: string
-        balance:
-          type: number
-          format: double
-        platform_id:
-          type: string
-    LineItem:
-      type: object
-      properties:
-        description:
-          type: string
-        quantity:
-          type: number
-        unit_price:
-          type: number
-          format: double
-        total_amount:
-          type: number
-          format: double
-    BillCreate:
-      type: object
-      required:
-      - vendor_id
-      - line_items
-      properties:
-        vendor_id:
-          type: string
-        currency:
-          type: string
-        due_date:
+        date:
           type: string
           format: date
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
+        description:
+          type: string
+        category:
+          type: string
+        account_id:
+          type: string
     Invoice:
       type: object
       properties:
@@ -322,32 +289,13 @@ components:
           type: string
         account_id:
           type: string
-    Expense:
-      type: object
-      properties:
-        id:
-          type: string
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-        date:
-          type: string
-          format: date
-        description:
-          type: string
-        category:
-          type: string
-        account_id:
-          type: string
-    InvoiceCreate:
+    BillCreate:
       type: object
       required:
-      - customer_id
+      - vendor_id
       - line_items
       properties:
-        customer_id:
+        vendor_id:
           type: string
         currency:
           type: string
@@ -384,7 +332,65 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - asset
+          - liability
+          - equity
+          - revenue
+          - expense
+        currency:
+          type: string
+        balance:
+          type: number
+          format: double
+        platform_id:
+          type: string
+    LineItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: number
+        unit_price:
+          type: number
+          format: double
+        total_amount:
+          type: number
+          format: double
+    InvoiceCreate:
+      type: object
+      required:
+      - customer_id
+      - line_items
+      properties:
+        customer_id:
+          type: string
+        currency:
+          type: string
+        due_date:
+          type: string
+          format: date
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
   parameters:
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
     XRutterVersion:
       name: X-Rutter-Version
       in: header
@@ -400,12 +406,6 @@ components:
       schema:
         type: string
       description: Unique access token identifying the specific connection
-    Cursor:
-      name: cursor
-      in: query
-      schema:
-        type: string
-      description: Pagination cursor from previous response next_cursor field
   securitySchemes:
     basicAuth:
       type: http

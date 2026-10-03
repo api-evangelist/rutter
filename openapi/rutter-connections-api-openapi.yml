@@ -97,6 +97,12 @@ paths:
                     type: string
 components:
   parameters:
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
     XRutterVersion:
       name: X-Rutter-Version
       in: header
@@ -105,12 +111,6 @@ components:
         type: string
         example: '2024-08-31'
       description: API version identifier
-    Cursor:
-      name: cursor
-      in: query
-      schema:
-        type: string
-      description: Pagination cursor from previous response next_cursor field
   schemas:
     Connection:
       type: object

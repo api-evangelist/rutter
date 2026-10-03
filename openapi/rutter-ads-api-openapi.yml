@@ -43,20 +43,6 @@ paths:
                   next_cursor:
                     type: string
 components:
-  schemas:
-    AdAccount:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        platform:
-          type: string
-        currency:
-          type: string
-        status:
-          type: string
   parameters:
     Cursor:
       name: cursor
@@ -79,6 +65,20 @@ components:
       schema:
         type: string
       description: Unique access token identifying the specific connection
+  schemas:
+    AdAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        platform:
+          type: string
+        currency:
+          type: string
+        status:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

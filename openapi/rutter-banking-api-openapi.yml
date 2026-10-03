@@ -70,6 +70,13 @@ components:
       schema:
         type: string
       description: Pagination cursor from previous response next_cursor field
+    AccessToken:
+      name: access_token
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Unique access token identifying the specific connection
     XRutterVersion:
       name: X-Rutter-Version
       in: header
@@ -78,13 +85,6 @@ components:
         type: string
         example: '2024-08-31'
       description: API version identifier
-    AccessToken:
-      name: access_token
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Unique access token identifying the specific connection
   securitySchemes:
     basicAuth:
       type: http
