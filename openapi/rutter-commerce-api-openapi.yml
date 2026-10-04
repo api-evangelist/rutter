@@ -267,6 +267,18 @@ paths:
                 $ref: '#/components/schemas/Customer'
 components:
   schemas:
+    ProductUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        status:
+          type: string
     ProductCreate:
       type: object
       required:
@@ -281,6 +293,32 @@ components:
           format: double
         currency:
           type: string
+    OrderLineItem:
+      type: object
+      properties:
+        product_id:
+          type: string
+        variant_id:
+          type: string
+        quantity:
+          type: integer
+        unit_price:
+          type: number
+          format: double
+    OrderCreate:
+      type: object
+      required:
+      - customer_id
+      - line_items
+      properties:
+        customer_id:
+          type: string
+        currency:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineItem'
     Order:
       type: object
       properties:
@@ -310,20 +348,52 @@ components:
         updated_at:
           type: string
           format: date-time
-    OrderCreate:
+    FulfillmentCreate:
       type: object
-      required:
-      - customer_id
-      - line_items
       properties:
-        customer_id:
+        tracking_number:
           type: string
-        currency:
+        tracking_url:
+          type: string
+        carrier:
           type: string
         line_items:
           type: array
           items:
-            $ref: '#/components/schemas/OrderLineItem'
+            type: object
+            properties:
+              line_item_id:
+                type: string
+              quantity:
+                type: integer
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    ProductVariant:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        price:
+          type: number
+          format: double
+        sku:
+          type: string
+        inventory_quantity:
+          type: integer
     Product:
       type: object
       properties:
@@ -354,83 +424,14 @@ components:
         updated_at:
           type: string
           format: date-time
-    FulfillmentCreate:
-      type: object
-      properties:
-        tracking_number:
-          type: string
-        tracking_url:
-          type: string
-        carrier:
-          type: string
-        line_items:
-          type: array
-          items:
-            type: object
-            properties:
-              line_item_id:
-                type: string
-              quantity:
-                type: integer
-    ProductUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        price:
-          type: number
-          format: double
-        status:
-          type: string
-    ProductVariant:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        price:
-          type: number
-          format: double
-        sku:
-          type: string
-        inventory_quantity:
-          type: integer
-    OrderLineItem:
-      type: object
-      properties:
-        product_id:
-          type: string
-        variant_id:
-          type: string
-        quantity:
-          type: integer
-        unit_price:
-          type: number
-          format: double
-    Customer:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        created_at:
-          type: string
-          format: date-time
   parameters:
-    Cursor:
-      name: cursor
+    AccessToken:
+      name: access_token
       in: query
+      required: true
       schema:
         type: string
-      description: Pagination cursor from previous response next_cursor field
+      description: Unique access token identifying the specific connection
     XRutterVersion:
       name: X-Rutter-Version
       in: header
@@ -439,13 +440,12 @@ components:
         type: string
         example: '2024-08-31'
       description: API version identifier
-    AccessToken:
-      name: access_token
+    Cursor:
+      name: cursor
       in: query
-      required: true
       schema:
         type: string
-      description: Unique access token identifying the specific connection
+      description: Pagination cursor from previous response next_cursor field
   securitySchemes:
     basicAuth:
       type: http

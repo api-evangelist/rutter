@@ -225,25 +225,6 @@ paths:
                     type: string
 components:
   schemas:
-    Expense:
-      type: object
-      properties:
-        id:
-          type: string
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-        date:
-          type: string
-          format: date
-        description:
-          type: string
-        category:
-          type: string
-        account_id:
-          type: string
     Invoice:
       type: object
       properties:
@@ -270,7 +251,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
-    Transaction:
+    Expense:
       type: object
       properties:
         id:
@@ -285,44 +266,18 @@ components:
           format: date
         description:
           type: string
-        type:
+        category:
           type: string
         account_id:
           type: string
-    BillCreate:
+    InvoiceCreate:
       type: object
       required:
-      - vendor_id
+      - customer_id
       - line_items
       properties:
-        vendor_id:
+        customer_id:
           type: string
-        currency:
-          type: string
-        due_date:
-          type: string
-          format: date
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-    Bill:
-      type: object
-      properties:
-        id:
-          type: string
-        vendor_id:
-          type: string
-        status:
-          type: string
-          enum:
-          - draft
-          - open
-          - paid
-          - voided
-        amount_due:
-          type: number
-          format: double
         currency:
           type: string
         due_date:
@@ -354,6 +309,51 @@ components:
           format: double
         platform_id:
           type: string
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        date:
+          type: string
+          format: date
+        description:
+          type: string
+        type:
+          type: string
+        account_id:
+          type: string
+    Bill:
+      type: object
+      properties:
+        id:
+          type: string
+        vendor_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - draft
+          - open
+          - paid
+          - voided
+        amount_due:
+          type: number
+          format: double
+        currency:
+          type: string
+        due_date:
+          type: string
+          format: date
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
     LineItem:
       type: object
       properties:
@@ -367,13 +367,13 @@ components:
         total_amount:
           type: number
           format: double
-    InvoiceCreate:
+    BillCreate:
       type: object
       required:
-      - customer_id
+      - vendor_id
       - line_items
       properties:
-        customer_id:
+        vendor_id:
           type: string
         currency:
           type: string
@@ -385,12 +385,13 @@ components:
           items:
             $ref: '#/components/schemas/LineItem'
   parameters:
-    Cursor:
-      name: cursor
+    AccessToken:
+      name: access_token
       in: query
+      required: true
       schema:
         type: string
-      description: Pagination cursor from previous response next_cursor field
+      description: Unique access token identifying the specific connection
     XRutterVersion:
       name: X-Rutter-Version
       in: header
@@ -399,13 +400,12 @@ components:
         type: string
         example: '2024-08-31'
       description: API version identifier
-    AccessToken:
-      name: access_token
+    Cursor:
+      name: cursor
       in: query
-      required: true
       schema:
         type: string
-      description: Unique access token identifying the specific connection
+      description: Pagination cursor from previous response next_cursor field
   securitySchemes:
     basicAuth:
       type: http

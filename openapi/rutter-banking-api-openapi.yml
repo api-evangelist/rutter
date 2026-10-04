@@ -64,12 +64,6 @@ components:
         institution_name:
           type: string
   parameters:
-    Cursor:
-      name: cursor
-      in: query
-      schema:
-        type: string
-      description: Pagination cursor from previous response next_cursor field
     AccessToken:
       name: access_token
       in: query
@@ -85,6 +79,12 @@ components:
         type: string
         example: '2024-08-31'
       description: API version identifier
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
   securitySchemes:
     basicAuth:
       type: http
