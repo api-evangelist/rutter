@@ -189,6 +189,9 @@ apis:
   - type: Documentation
     url: https://docs.rutter.com/
 common:
+  - type: CapabilityMap
+    url: capabilities/rutter-capability-edges.yml
+    name: Rutter Business Capability Map
   - type: AgenticAccess
     url: agentic-access/rutter-agentic-access.yml
   - type: DomainSecurity
