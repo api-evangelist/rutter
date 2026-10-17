@@ -77,7 +77,35 @@ paths:
         '204':
           description: Webhook deleted
 components:
+  parameters:
+    XRutterVersion:
+      name: X-Rutter-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '2024-08-31'
+      description: API version identifier
   schemas:
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        events:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        created_at:
+          type: string
+          format: date-time
     WebhookCreate:
       type: object
       required:
@@ -98,34 +126,6 @@ components:
             - order.updated
             - product.created
             - product.updated
-    Webhook:
-      type: object
-      properties:
-        id:
-          type: string
-        url:
-          type: string
-        events:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        created_at:
-          type: string
-          format: date-time
-  parameters:
-    XRutterVersion:
-      name: X-Rutter-Version
-      in: header
-      required: true
-      schema:
-        type: string
-        example: '2024-08-31'
-      description: API version identifier
   securitySchemes:
     basicAuth:
       type: http

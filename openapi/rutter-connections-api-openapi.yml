@@ -96,6 +96,21 @@ paths:
                   access_token:
                     type: string
 components:
+  parameters:
+    XRutterVersion:
+      name: X-Rutter-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '2024-08-31'
+      description: API version identifier
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Pagination cursor from previous response next_cursor field
   schemas:
     Connection:
       type: object
@@ -117,21 +132,6 @@ components:
         updated_at:
           type: string
           format: date-time
-  parameters:
-    XRutterVersion:
-      name: X-Rutter-Version
-      in: header
-      required: true
-      schema:
-        type: string
-        example: '2024-08-31'
-      description: API version identifier
-    Cursor:
-      name: cursor
-      in: query
-      schema:
-        type: string
-      description: Pagination cursor from previous response next_cursor field
   securitySchemes:
     basicAuth:
       type: http
