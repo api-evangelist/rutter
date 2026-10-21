@@ -315,3 +315,45 @@
   relationship: connector-coverage
   status: not-a-workflow
   arazzo: null
+- slug: rutter-andreessen-horowitz-a16z
+  label: Andreessen Horowitz (a16z)
+  partner: a16z
+  partner_name: Andreessen Horowitz (a16z)
+  category: vc portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://a16z.com/companies/rutter/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: a16z portfolio (a16z.com/portfolio/, the page's own data-companies JSON)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Rutter
+    register_id: https://a16z.com/companies/rutter/
+    register_country: null
+    register_website: https://www.rutter.com/
+    matched_domain: rutter.com
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    year: '2022'
+    status: Active
+    sector: Enterprise
+  status: not-a-workflow
+  arazzo: null
+- slug: rutter-amazon-selling-partner-appstore
+  label: Amazon Selling Partner Appstore
+  partner: amazon-seller-central
+  partner_name: Amazon Selling Partner Appstore
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://sellercentral.amazon.com/selling-partner-appstore/dp/amzn1.sp.solution.1a868d0f-5e24-4eec-bae1-8c22470845c1
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
