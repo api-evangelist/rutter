@@ -1,4 +1,4 @@
-# Rutter (rutter)
+# Rutter
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,129 +66,172 @@
 
 Rutter is the leading unified RESTful API for B2B financial products that connects to over 60 commerce, payments, accounting, and ads platforms through a single API. Trusted by companies like Airwallex, Mercury, and Ramp, Rutter enables developers to read, update, write, and remove data across major business platforms with a unified data model and idempotency guarantees for financial data. The API supports OAuth2 and Basic authentication, versioning via the X-Rutter-Version header, cursor-based pagination, and asynchronous request processing.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/apis.yml)
+**Areas:** Accounting · B2B · Commerce · Financial Data · Payments · Unified API
 
-## Scope
+## Rutter on APIs.io
 
-- **Type:** Index
+Everything profiled for Rutter is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/rutter/](https://apis.io/providers/rutter/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (9)
 
-- Accounting
-- B2B
-- Commerce
-- Financial Data
-- Payments
-- Unified API
+- [Rutter Commerce API](https://apis.io/apis/rutter/commerce-api/) — The Rutter Commerce API enables reading and writing data to all major commerce platforms through a unified API, supporting platforms like Shopify,…
+- [Rutter Accounting API](https://apis.io/apis/rutter/accounting-api/) — The Rutter Accounting API provides a unified interface to read and write data to all major accounting platforms including QuickBooks, Xero, Freshbooks, and…
+- [Rutter Payments API](https://apis.io/apis/rutter/payments-api/) — The Rutter Payments API provides a unified interface to read and write data to all major payment platforms through a single REST API.
+- [Rutter Accounting API](https://apis.io/apis/rutter/rutter-accounting-api/) — Accounting data across platforms
+- [Rutter Ads API](https://apis.io/apis/rutter/rutter-ads-api/) — Advertising platform data
+- [Rutter Banking API](https://apis.io/apis/rutter/rutter-banking-api/) — Banking and financial account data
+- [Rutter Commerce API](https://apis.io/apis/rutter/rutter-commerce-api/) — Commerce and e-commerce data
+- [Rutter Connections API](https://apis.io/apis/rutter/rutter-connections-api/) — Manage platform connections and authentication
+- [Rutter Webhooks API](https://apis.io/apis/rutter/rutter-webhooks-api/) — Webhook configuration and management
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Rutter Unified API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Rutter Unified API provides a single RESTful interface to over 60 commerce, payments, and accounting platforms. It supports connection management, accounting data (accounts, transactions, invoices, bills, expenses), commerce data (orders, products, customers), payments data, ads data, and banking data through a versioned API with cursor pagination and idempotent writes.
+- [Rutter Agentic Access](https://apis.io/agentic-access/rutter/rutter-agentic-access/)
 
-- **Human URL:** [https://docs.rutter.com/](https://docs.rutter.com/)
-- **Base URL:** `https://production.rutterapi.com/versioned`
+#### JSON Schema (3)
 
-#### Tags
+The data models the API reads and writes.
 
-- Accounting
-- B2B
-- Commerce
-- Financial Data
-- Payments
-- Unified API
+- [Rutter Connection](https://apis.io/schemas/rutter/rutter-connection/)
+- [Rutter Invoice](https://apis.io/schemas/rutter/rutter-invoice/)
+- [Rutter Order](https://apis.io/schemas/rutter/rutter-order/)
 
-#### Properties
+#### JSON Structure (3)
 
-- [Documentation](https://docs.rutter.com/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/openapi/rutter-unified-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/rutter-unified-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rutter-unified-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### Rutter Commerce API
+- [Rutter Connection Structure](https://apis.io/json-structure/rutter/rutter-connection-structure/)
+- [Rutter Invoice Structure](https://apis.io/json-structure/rutter/rutter-invoice-structure/)
+- [Rutter Order Structure](https://apis.io/json-structure/rutter/rutter-order-structure/)
 
-The Rutter Commerce API enables reading and writing data to all major commerce platforms through a unified API, supporting platforms like Shopify, WooCommerce, Amazon, and more.
+#### JSON-LD (1)
 
-- **Human URL:** [https://www.rutter.com/product/commerce-api](https://www.rutter.com/product/commerce-api)
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Rutter Context](https://apis.io/jsonld/rutter/rutter-context/)
 
-- Commerce
-- E-Commerce
-- Unified API
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://docs.rutter.com/)
-- [Product Page](https://www.rutter.com/product/commerce-api)
-- [Postman Collection](collections/rutter-unified-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rutter-unified-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Rutter Unified API Vocabulary](https://apis.io/vocabularies/rutter/rutter-vocabulary/)
 
-### Rutter Accounting API
+#### Examples (3)
 
-The Rutter Accounting API provides a unified interface to read and write data to all major accounting platforms including QuickBooks, Xero, Freshbooks, and Zoho Books.
+Example requests and responses.
 
-- **Human URL:** [https://www.rutter.com/product/accounting-api](https://www.rutter.com/product/accounting-api)
+- [Rutter List Connections Example](https://apis.io/examples/rutter/rutter-list-connections-example/)
+- [Rutter List Invoices Example](https://apis.io/examples/rutter/rutter-list-invoices-example/)
+- [Rutter List Orders Example](https://apis.io/examples/rutter/rutter-list-orders-example/)
 
-#### Tags
+#### Collections (7)
 
-- Accounting
-- Financial Data
-- Unified API
+Postman and Open Collection request collections.
 
-#### Properties
+- [Rutter Unified Accounting API](https://apis.io/collections/rutter/open-rutter-accounting-api/)
+- [Rutter Unified Accounting Ads API](https://apis.io/collections/rutter/open-rutter-ads-api/)
+- [Rutter Unified Accounting Banking API](https://apis.io/collections/rutter/open-rutter-banking-api/)
+- [Rutter Unified Accounting Commerce API](https://apis.io/collections/rutter/open-rutter-commerce-api/)
+- [Rutter Unified Accounting Connections API](https://apis.io/collections/rutter/open-rutter-connections-api/)
+- [Rutter Unified API](https://apis.io/collections/rutter/open-rutter-unified-api/)
+- [Rutter Unified Accounting Webhooks API](https://apis.io/collections/rutter/open-rutter-webhooks-api/)
 
-- [Documentation](https://docs.rutter.com/)
-- [Product Page](https://www.rutter.com/product/accounting-api)
-- [Postman Collection](collections/rutter-unified-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rutter-unified-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Governance rules (2)
 
-### Rutter Payments API
+Spectral rulesets for the provider's contracts.
 
-The Rutter Payments API provides a unified interface to read and write data to all major payment platforms through a single REST API.
+- [Rutter — jsonschema rules](https://apis.io/rules/rutter/rutter-jsonschema-spectral-rules/)
+- [Rutter API Rules](https://apis.io/rules/rutter/rutter-spectral-rules/)
 
-- **Human URL:** [https://www.rutter.com/product/payments-api](https://www.rutter.com/product/payments-api)
+#### Security (2)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- Financial Data
-- Payments
-- Unified API
+- [Rutter Authentication](https://apis.io/security/rutter/rutter-authentication/)
+- [Rutter Domain Security](https://apis.io/security/rutter/rutter-domain-security/)
 
-#### Properties
+#### Plans and pricing (1)
 
-- [Documentation](https://docs.rutter.com/)
-- [Product Page](https://www.rutter.com/product/payments-api)
-- [Postman Collection](collections/rutter-unified-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rutter-unified-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published plans, tiers and prices.
 
-## Common Properties
+- [Rutter Plans Pricing](https://apis.io/plans/rutter/rutter-plans-pricing/)
 
-- [LinkedIn](https://www.linkedin.com/company/rutterapi)
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rutter Rate Limits](https://apis.io/rate-limits/rutter/rutter-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Rutter Finops](https://apis.io/finops/rutter/rutter-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.rutter.com/)
 - [Documentation](https://docs.rutter.com/)
 - [Pricing](https://www.rutter.com/pricing)
 - [Blog](https://www.rutter.com/blog)
-- [Integrations](https://www.rutter.com/integrations)
-- [A P Is](https://www.rutter.com/our-features/apis)
-- [Sign Up](https://dashboard.rutterapi.com/sign-up)
-- [Git Hub](https://github.com/rutter)
-- [SDK](https://github.com/rutter/react-rutter-link)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/vocabulary/rutter-vocabulary.yml)
-- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-ld/rutter-context.jsonld)
-- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/rules/rutter-spectral-rules.yml)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-connection-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-invoice-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/rutter/refs/heads/main/json-schema/rutter-order-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [L L Ms Txt](https://dashboard.rutterapi.com/llms.txt)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 35.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 55.4 |
+| Contract governance | 27.3 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 28.9 |
+
+**Agent readiness 24.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 15.2** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/rutter/](https://apis.io/providers/rutter/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Rutter: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/rutter/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
